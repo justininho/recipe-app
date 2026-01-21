@@ -1,0 +1,40 @@
+import {Recipe} from "@/features/recipes/types/recipe.types";
+
+export const MOCK_RECIPES: Recipe[] = [
+  {
+    id: '1',
+    name: 'Spaghetti Carbonara',
+    description: 'Classic Italian pasta with creamy egg sauce',
+    prepTime: 15,
+    cookTime: 20,
+    servings: 4,
+    imageUrl: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400',
+    tags: ['Italian', 'Pasta', 'Quick'],
+    ingredients: [],
+    instructions: [],
+  },
+  {
+    id: '2',
+    name: 'Chicken Stir Fry',
+    description: 'Quick and healthy Asian-inspired dish',
+    prepTime: 10,
+    cookTime: 15,
+    servings: 2,
+    imageUrl: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400',
+    tags: ['Asian', 'Healthy', 'Quick'],
+    ingredients: [],
+    instructions: [],
+  },
+  {
+    id: '3',
+    name: 'Caesar Salad',
+    description: 'Fresh romaine with homemade dressing',
+    prepTime: 15,
+    cookTime: 0,
+    servings: 2,
+    imageUrl: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400',
+    tags: ['Salad', 'Healthy', 'Vegetarian'],
+    ingredients: [],
+    instructions: [],
+  },
+];
