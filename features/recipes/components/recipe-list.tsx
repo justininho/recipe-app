@@ -7,9 +7,10 @@ import {Text} from "@/components/ui/text";
 export type RecipeListProps = {
   recipes: Recipe[];
   onPress?: (recipe: Recipe) => void;
+  numColumns?: number;
 }
 
-export const RecipeList: FC<RecipeListProps> = ({recipes, onPress}: RecipeListProps) => {
+export const RecipeList: FC<RecipeListProps> = ({recipes, onPress, numColumns = 2}: RecipeListProps) => {
   const defaultOnPress = (recipe: Recipe) => {
     console.log("Recipe: {recipe} clicked", recipe);
   }
@@ -17,12 +18,25 @@ export const RecipeList: FC<RecipeListProps> = ({recipes, onPress}: RecipeListPr
     <FlatList
       data={recipes}
       keyExtractor={(item) => item.id}
-      renderItem={({item}) => <RecipeCard
-        recipe={item}
-        onPress={onPress ?? defaultOnPress}
-      />}
-      contentContainerStyle={{padding: 16}}
+      numColumns={numColumns}
+      key={numColumns} // Important: Forces re-render when numColumns changes
+      contentContainerStyle={{padding: 16, paddingBottom: 100   }}
       showsVerticalScrollIndicator={false}
+      renderItem={({item, index}) => (
+        <View
+          style={{
+            flex: 1 / numColumns,
+            padding: 8,
+            // Add margin for the last item in a row to prevent uneven spacing
+            marginRight: (index + 1) % numColumns === 0 ? 0 : 0
+          }}
+        >
+          <RecipeCard
+            recipe={item}
+            onPress={onPress ?? defaultOnPress}
+          />
+        </View>
+      )}
       ListEmptyComponent={
         <View className="items-center justify-center py-20">
           <Text className="text-xl text-muted-foreground mb-2">
