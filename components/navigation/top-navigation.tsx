@@ -1,54 +1,56 @@
 import { View, Text, Pressable } from 'react-native';
-import {useRouter, useSegments, Href} from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { cn } from '@/lib/utils';
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-type NavItem = {
-  label: string;
-  path: Href;
-};
-
-const NAV_ITEMS: NavItem[] = [
-  { label: 'Recipes', path: '/(tabs)/(recipes)' },
-  { label: 'Meal Plan', path: '/(tabs)/(meal-plan)' },
-  { label: 'Grocery', path: '/(tabs)/(grocery)' },
-];
-
-export function TopNavigation() {
-  const router = useRouter();
-  // const pathname = usePathname();
-  const segments = useSegments();
-
-  // Get the active segment (will be like ['(tabs)', 'recipes'] or ['(tabs)', 'meal-plan'])
-  const activeSegment = segments[1] || 'recipes'; // Default to recipes
-
-  const isActive = (path: Href) => {
-    const segment = path.toString().split('/')[2]; // Get the segment from the path
-    return activeSegment === segment
-  };
-
+export function TopNavigation({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
-    <View className="flex-row justify-center gap-8 px-6 py-4 bg-background border-b border-border">
-      {NAV_ITEMS.map((item) => (
-        <Pressable
-          key={item.path.toString()}
-          onPress={() => router.push(item.path)}
-          className="py-2"
-        >
-          <Text
-            className={cn(
-              'text-base font-medium transition-colors',
-              isActive(item.path)
-                ? 'text-foreground'
-                : 'text-muted-foreground'
-            )}
-          >
-            {item.label}
-          </Text>
-          {isActive(item.path) && (
-            <View className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-foreground rounded-full" />
-          )}
-        </Pressable>
-      ))}
-    </View>
+      <SafeAreaView edges={['top']} className="bg-background">
+      <View className="flex-row justify-center gap-8 px-6 py-4" style={{ borderBottomWidth: 0 }}>
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const label = options.title || route.name;
+          const isActive = state.index === index;
+
+          // ignore (tabs)/index route
+          // its only purpose is to redirect to recipes tab
+          if (route.name === 'index') return null;
+
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (!isActive && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
+
+          return (
+            <Pressable
+              key={route.key}
+              onPress={onPress}
+              className="py-2"
+            >
+              <Text
+                className={cn(
+                  'text-base font-medium transition-colors',
+                  isActive
+                    ? 'text-foreground'
+                    : 'text-muted-foreground'
+                )}
+              >
+                {label}
+              </Text>
+              {isActive && (
+                <View className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-foreground rounded-full" />
+              )}
+            </Pressable>
+          );
+        })}
+      </View>
+    </SafeAreaView>
   );
 }

@@ -1,26 +1,26 @@
+import { Link } from 'expo-router';
+import { Pressable } from 'react-native';
+import { Card, CardContent } from '@/components/ui/card';
+import { Text } from '@/components/ui/text';
+
 type RecipeTagCardProps = {
   tag: string;
   count: number;
-  onPress: () => void;
 };
 
-export function RecipeTagCard({ tag, count, onPress }: RecipeTagCardProps) {
+export function RecipeTagCard({ tag, count }: RecipeTagCardProps) {
   return (
-    <div
-      onClick={onPress}
-      style={{
-        padding: '12px 16px',
-        borderRadius: 8,
-        backgroundColor: '#f0f0f0',
-        marginBottom: 12,
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      <span style={{ fontSize: 16, fontWeight: 500 }}>{tag}</span>
-      <span style={{ fontSize: 14, color: '#666' }}>{count}</span>
-    </div>
+    <Link href={`/recipes/tags/${tag}`} asChild>
+      <Pressable className="active:scale-95">
+        <Card>
+          <CardContent className="flex-row items-center justify-between p-4">
+            <Text className="text-base font-medium">{tag}</Text>
+            <Text className="text-sm text-muted-foreground">
+              {count} {count === 1 ? 'recipe' : 'recipes'}
+            </Text>
+          </CardContent>
+        </Card>
+      </Pressable>
+    </Link>
   );
 }

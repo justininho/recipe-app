@@ -1,4 +1,4 @@
-// app/(tabs)/(recipes)/tags/[tag].tsx
+// app/(tabs)/recipes/tags/[tag].tsx
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RecipeList } from '@/features/recipes/components/recipe-list';
@@ -14,15 +14,16 @@ export default function TagDetailScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background">
-      {/*<Stack.Screen*/}
-      {/*  options={{*/}
-      {/*    headerShown: false*/}
-      {/*  }}*/}
-      {/*/>*/}
+      <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+      />
 
       <RecipesHeader
         title={tag}
         count={recipes.length}
+        showBackButton={true}
       />
 
       <RecipeList recipes={recipes} numColumns={2} />

@@ -1,5 +1,4 @@
-// features/recipes/components/recipes-header.tsx
-import {View} from "react-native";
+import { View, Pressable } from "react-native";
 import {
   Select,
   SelectContent,
@@ -9,17 +8,20 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import {Text} from "@/components/ui/text";
-import {useRef} from "react";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {Option, TriggerRef} from "@rn-primitives/select";
-import {ViewBy} from "@/features/recipes/types/recipe.types";
+import { Text } from "@/components/ui/text";
+import { useRef } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Option, TriggerRef } from "@rn-primitives/select";
+import { ViewBy } from "@/features/recipes/types/recipe.types";
+import { useRouter } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
 
 type RecipesHeaderProps = {
   title?: string;
   count?: number;
   showSelect?: boolean;
-  viewBy?: ViewBy
+  showBackButton?: boolean;
+  viewBy?: ViewBy;
   onViewByChange?: (option: Option) => void;
 }
 
@@ -27,23 +29,22 @@ export default function RecipesHeader({
                                         title = "My Recipes",
                                         count,
                                         showSelect = false,
+                                        showBackButton = false,
                                         viewBy,
                                         onViewByChange
                                       }: RecipesHeaderProps) {
 
-  // accounts for notch and safe viewing area
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   const contentInsets = {
     top: insets.top,
     bottom: insets.bottom,
-    left: 12,
-    right: 12,
+    left: 16,
+    right: 16,
   };
 
-  // used by select
   const selectRef = useRef<TriggerRef>(null);
 
-  // Workaround for rn-primitives/select not opening on mobile
   function onTouchStart() {
     selectRef.current?.open();
   }
@@ -56,12 +57,26 @@ export default function RecipesHeader({
   ];
 
   return (
-    <View className="px-6 pt-5 pb-4 flex-row items-end">
-      <View className="">
-        <Text className="text-xl font-bold">{title}</Text>
-        <Text className="text-muted-foreground mt-1">
-          {count} {count === 1 ? 'recipe' : 'recipes'}
-        </Text>
+    <View
+      className="px-6 pt-6 pb-4 flex-row items-end justify-between"
+      style={{
+        paddingTop: 24,
+      }}>
+      <View className="flex-row items-center gap-2">
+        {showBackButton && (
+          <Pressable
+            onPress={() => router.back()}
+            className="mr-2 active:opacity-70"
+          >
+            <ChevronLeft size={24} className="text-foreground" />
+          </Pressable>
+        )}
+        <View>
+          <Text className="text-xl font-bold">{title}</Text>
+          <Text className="text-muted-foreground mt-1">
+            {count} {count === 1 ? 'recipe' : 'recipes'}
+          </Text>
+        </View>
       </View>
 
       {/* View By Select */}

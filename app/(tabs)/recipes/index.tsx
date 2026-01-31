@@ -69,9 +69,9 @@ export default function RecipesScreen() {
   }
 
   // TODO: add vs edit
-  const handleOpenForm = () => {
-    router.push('/form');
-  }
+  // const handleOpenForm = () => {
+  //   router.push('/form');
+  // }
 
   // const contextActions: ContextAction[] = [
   //   {
@@ -95,6 +95,7 @@ export default function RecipesScreen() {
     <SafeAreaView className="flex-1 bg-background">
       <StatusBar style="auto"/>
 
+      {/*todo: fix count*/}
       <RecipesHeader
         title="My Recipes"
         count={recipes.length}

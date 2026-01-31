@@ -16,7 +16,7 @@ export function FloatingNav() {
   const pathname = usePathname();
 
   const navButtons: NavButton[] = [
-    { icon: Home, route: '/(tabs)/(recipes)', label: 'Recipes', matchPath: '/' },
+    { icon: Home, route: '/tabs/recipes', label: 'Recipes', matchPath: '/' },
     // { icon: Plus, route: '/(tabs)/(recipes)/form', label: 'Add', matchPath: '/form' },
     // { icon: Calendar, route: '/meal-plan', label: 'Meals', matchPath: '/meal-plan' },
     // { icon: ShoppingCart, route: '/grocery', label: 'Grocery', matchPath: '/grocery' },
