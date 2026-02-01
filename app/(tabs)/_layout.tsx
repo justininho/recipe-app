@@ -2,6 +2,7 @@ import {Tabs} from 'expo-router';
 import React from 'react';
 import {TopNavigation} from "@/components/navigation/top-navigation";
 import {Home} from "lucide-react-native";
+import RecipesHeader from "@/features/recipes/components/recipes-header";
 
 export default function TabsLayout() {
   return (
@@ -10,11 +11,12 @@ export default function TabsLayout() {
       initialRouteName="recipes"
       tabBar={(props) => <TopNavigation {...props} />}
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         tabBarPosition: 'top',
         // tabBarIconStyle: { display: 'none' },
         // tabBarLabelStyle: { fontSize: 16, fontWeight: '600' },
-        // tabBarStyle: { backgroundColor: 'white', borderBottomWidth: 0, borderBottomColor: 'white' },
+        // tabBarStyle: { borderBottomWidth: 0 },
+        tabBarStyle: { backgroundColor: 'white', borderBottomWidth: 0, borderBottomColor: 'white' },
       }}
     >
 
@@ -22,26 +24,28 @@ export default function TabsLayout() {
         name="index"
         options={{
           href: null,
-
         }}
       />
 
       <Tabs.Screen
         name="recipes"
         options={{
-          title: 'Recipes',
           headerShown: false,
+          title: 'Recipes',
+          // header: () => <RecipesHeader title="My Recipes" />,
         }}
       />
       <Tabs.Screen
         name="meal-plan"
         options={{
+          headerShown: false,
           title: 'Meal Plan',
         }}
       />
       <Tabs.Screen
         name="grocery"
         options={{
+          headerShown: false,
           title: 'Groceries',
         }}
       />
@@ -49,6 +53,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
+          headerShown: false,
           title: 'Settings',
         }}
       />

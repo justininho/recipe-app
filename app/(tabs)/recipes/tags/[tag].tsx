@@ -1,4 +1,3 @@
-// app/(tabs)/recipes/tags/[tag].tsx
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RecipeList } from '@/features/recipes/components/recipe-list';

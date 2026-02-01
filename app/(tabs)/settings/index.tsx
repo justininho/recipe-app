@@ -9,7 +9,7 @@ export default function SettingsPage() {
 
   return (
     <View key={colorScheme} className="flex-1 p-4">
-      <Text className="text-2xl font-bold mb-6">Settings</Text>
+      {/*<Text className="text-2xl font-bold mb-6">Settings</Text>*/}
 
       <View className="mb-6">
         <View className="flex-row items-center justify-between">

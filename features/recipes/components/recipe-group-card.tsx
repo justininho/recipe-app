@@ -1,16 +1,16 @@
+import {Href} from "expo-router";
 import ImageCard from "@/features/recipes/components/image-card";
-import {Href} from "expo-router/build/types";
 import {View} from "react-native";
 import {Text} from "@/components/ui/text";
 
-type RecipeTagCardProps = {
-  tag: string;
+export type RecipeGroupCardProps = {
+  group: string;
   count: number;
   images: string[];
-};
+}
 
-export function RecipeTagCard({tag, count, images}: RecipeTagCardProps) {
-  const href: Href = `/recipes/tags/${tag}`;
+export default function RecipeGroupCard({group, count, images}: RecipeGroupCardProps) {
+  const href: Href = `/recipes/groups/${group}`;
 
   return (
     <ImageCard
@@ -18,7 +18,7 @@ export function RecipeTagCard({tag, count, images}: RecipeTagCardProps) {
       href={href}
       cardContent={
         <View>
-          <Text className="font-semibold text-lg">{tag}</Text>
+          <Text className="font-semibold text-lg">{group}</Text>
           <Text className="text-sm text-muted-foreground">{count} {count === 1 ? 'recipe' : 'recipes'}</Text>
         </View>
       }

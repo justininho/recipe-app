@@ -7,6 +7,7 @@ export default function GroceryLayout() {
       <Stack.Screen
         name="index"
         options={{
+          headerShown: false,
           title: 'Groceries',
         }}
       />

@@ -6,14 +6,14 @@ import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 export function TopNavigation({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
       <SafeAreaView edges={['top']} className="bg-background">
-      <View className="flex-row justify-center gap-8 px-6 py-4" style={{ borderBottomWidth: 0 }}>
+      <View className="flex-row justify-center gap-8 px-6 py-2" style={{ borderBottomWidth: 0 }}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label = options.title || route.name;
           const isActive = state.index === index;
 
           // ignore (tabs)/index route
-          // its only purpose is to redirect to recipes tab
+          // its only purpose is to redirect to recipe tab
           if (route.name === 'index') return null;
 
           const onPress = () => {

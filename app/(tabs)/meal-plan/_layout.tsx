@@ -7,6 +7,7 @@ export default function MealPlanLayout() {
       <Stack.Screen
         name="index"
         options={{
+          headerShown: false,
           title: 'Meal Plan',
         }}
       />

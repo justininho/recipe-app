@@ -58,9 +58,10 @@ export default function RecipesHeader({
 
   return (
     <View
-      className="px-6 pt-6 pb-4 flex-row items-end justify-between"
+      className="px-6 flex-row items-end justify-between"
       style={{
-        paddingTop: 24,
+        paddingTop: 8 + insets.top,
+        paddingBottom: 8,
       }}>
       <View className="flex-row items-center gap-2">
         {showBackButton && (
