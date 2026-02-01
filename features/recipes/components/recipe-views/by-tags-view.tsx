@@ -19,6 +19,11 @@ export function RecipesByTagsView({recipes, numColumns = 2}: RecipesByTagsViewPr
     return map;
   }, new Map<string, Recipe[]>());
 
+  const imagesForTag = (tag: string): string[] => {
+    const taggedRecipes = recipesByTag.get(tag) || [];
+    return taggedRecipes.slice(0, 3).map(recipe => recipe.imageUrl || "");
+  }
+
 
   return (
     <FlatList
@@ -37,7 +42,7 @@ export function RecipesByTagsView({recipes, numColumns = 2}: RecipesByTagsViewPr
                 marginRight: (index + 1) % numColumns === 0 ? 0 : 0
               }}
         >
-          <RecipeTagCard tag={item[0]} count={item[1].length}/>
+          <RecipeTagCard tag={item[0]} count={item[1].length} images={imagesForTag(item[0])}/>
         </View>
       )}
     />
