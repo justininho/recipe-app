@@ -7,7 +7,6 @@ import {RecipeList} from "@/features/recipes/components/recipe-list";
 export default function GroupDetailScreen() {
   const { group } = useLocalSearchParams<{ group: string }>();
   const recipeIds = MOCK_GROUPS.find(g => g.name === group)?.recipeIds || [];
-  console.log('group', group, recipeIds);
   const recipes = MOCK_RECIPES.filter(
     recipe => recipeIds.includes(recipe.id)
   )

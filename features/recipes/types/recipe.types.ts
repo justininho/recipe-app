@@ -6,9 +6,12 @@ export type Recipe = {
   cookTime: number;
   servings: number;
   imageUrl?: string;
-  tags: string[];
   ingredients: Ingredient[];
   instructions: string[];
+
+  // view by
+  // move to recipe tags
+  tags: string[];
 };
 
 export type Ingredient = {
@@ -16,6 +19,21 @@ export type Ingredient = {
   amount: number;
   unit: string;
 };
+
+export type Instruction = {
+  id: string;
+  step: number;
+  description: string;
+  ingredients?: Ingredient[];
+  seconds?: number;
+}
+
+// todo: move to recipe tags
+export type RecipeTag = {
+  id: string,
+  name: string;
+  recipeIds: string[];
+}
 
 // Groups - collections of recipes organized by theme/purpose
 export type RecipeGroup = {

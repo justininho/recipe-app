@@ -5,6 +5,7 @@ import { RecipeList } from '@/features/recipes/components/recipe-list';
 import {RecipeTagCard} from "@/features/recipes/components/recipe-tag-card";
 import {useMemo} from "react";
 import RecipeGroupCard from "@/features/recipes/components/recipe-group-card";
+import {getImageUrls} from "@/features/recipes/utils";
 
 type RecipesByGroupsViewProps = {
   recipes: Recipe[];
@@ -26,8 +27,6 @@ export function RecipesByGroupsView({ recipes, groups, numColumns = 2 }: Recipes
     return map;
   }, new Map<string, Recipe[]>());
 
-  const images = useMemo(() => recipes.map(r => r.imageUrl).filter(url => url !== undefined), [recipes]);
-
   return (
     <FlatList
       data={Array.from(recipesByGroup)}
@@ -45,7 +44,7 @@ export function RecipesByGroupsView({ recipes, groups, numColumns = 2 }: Recipes
                 marginRight: (index + 1) % numColumns === 0 ? 0 : 0
               }}
         >
-          <RecipeGroupCard group={item[0]} count={item[1].length} images={images}/>
+          <RecipeGroupCard group={item[0]} count={item[1].length} images={getImageUrls(item[1])}/>
         </View>
       )}
     />

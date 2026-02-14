@@ -2,6 +2,7 @@ import {Recipe} from '@/features/recipes/types/recipe.types';
 import {FlatList, View} from 'react-native';
 import {RecipeTagCard} from "@/features/recipes/components/recipe-tag-card";
 import {useMemo} from "react";
+import {getImageUrls} from "@/features/recipes/utils";
 
 type RecipesByTagsViewProps = {
   recipes: Recipe[];
@@ -20,8 +21,6 @@ export function RecipesByTagsView({recipes, numColumns = 2}: RecipesByTagsViewPr
     return map;
   }, new Map<string, Recipe[]>());
 
-  const images = useMemo(() => recipes.map(r => r.imageUrl).filter(url => url !== undefined), [recipes]);
-
   return (
     <FlatList
       data={Array.from(recipesByTag)}
@@ -39,7 +38,7 @@ export function RecipesByTagsView({recipes, numColumns = 2}: RecipesByTagsViewPr
                 marginRight: (index + 1) % numColumns === 0 ? 0 : 0
               }}
         >
-          <RecipeTagCard tag={item[0]} count={item[1].length} images={images}/>
+          <RecipeTagCard tag={item[0]} count={item[1].length} images={getImageUrls(item[1])}/>
         </View>
       )}
     />

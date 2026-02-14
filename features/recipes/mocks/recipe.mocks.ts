@@ -12,6 +12,7 @@ export const MOCK_RECIPES: Recipe[] = [
     tags: ['Italian', 'Pasta', 'Quick'],
     ingredients: [],
     instructions: [],
+    isFavorite: true,
   },
   {
     id: '2',
@@ -24,6 +25,7 @@ export const MOCK_RECIPES: Recipe[] = [
     tags: ['Asian', 'Healthy', 'Quick'],
     ingredients: [],
     instructions: [],
+    isFavorite: true,
   },
   {
     id: '3',
@@ -36,6 +38,7 @@ export const MOCK_RECIPES: Recipe[] = [
     tags: ['Salad', 'Healthy', 'Vegetarian'],
     ingredients: [],
     instructions: [],
+    isFavorite: true,
   },
   {
     id: '4',
@@ -48,6 +51,7 @@ export const MOCK_RECIPES: Recipe[] = [
     tags: ['Mexican', 'Quick', 'Dinner'],
     ingredients: [],
     instructions: [],
+    isFavorite: true,
   },
   {
     id: '5',
