@@ -52,7 +52,8 @@ export default function RecipesScreen() {
     {label: 'By Groups', value: 'groups'},
   ];
   const [view, setView] = useState<ViewBy>('all');
-
+  const title = viewOptions.filter(option => option.value === view)[0].label;
+  
   const onViewByChange = (option?: Option) => {
     if (option?.value) setView(option.value as ViewBy);
   }
@@ -63,6 +64,7 @@ export default function RecipesScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
+          title: title,
           headerTitle: () => (
             <View className="px-2" style={{paddingLeft: contentInsets.left}}>
               <RecipesHeader

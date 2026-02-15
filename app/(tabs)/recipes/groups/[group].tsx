@@ -3,6 +3,7 @@ import {MOCK_GROUPS, MOCK_RECIPES} from "@/features/recipes/mocks/recipe.mocks";
 import {SafeAreaView} from "react-native-safe-area-context";
 import RecipesHeader from "@/features/recipes/components/recipes-header";
 import {RecipeList} from "@/features/recipes/components/recipe-list";
+import { View } from "react-native";
 
 export default function GroupDetailScreen() {
   const { group } = useLocalSearchParams<{ group: string }>();
@@ -16,15 +17,18 @@ export default function GroupDetailScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          headerTitle: () => (
-            <RecipesHeader
-              title={group}
-              count={recipes.length}
-            />
-          ),
+          title: group,
+          headerTitle: () => <></>
         }}
       />
-
+      
+      <View className="px-6">
+        <RecipesHeader
+          title={group}
+          count={recipes.length}
+        />
+      </View>
+      
       <RecipeList recipes={recipes} numColumns={2} />
     </SafeAreaView>
   );

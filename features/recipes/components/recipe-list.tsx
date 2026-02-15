@@ -16,13 +16,13 @@ export const RecipeList: FC<RecipeListProps> = ({recipes, numColumns = 2}: Recip
       keyExtractor={(item) => item.id}
       numColumns={numColumns}
       key={numColumns} // Important: Forces re-render when numColumns changes
-      contentContainerStyle={{padding: 16, paddingBottom: 100}}
+      contentContainerStyle={{paddingLeft: 16, paddingRight :16, paddingTop: 0, paddingBottom: 100}}
       showsVerticalScrollIndicator={false}
       renderItem={({item, index}) => (
         <View
           style={{
             flex: 1 / numColumns,
-            padding: 8,
+            padding: 4,
             // Add margin for the last item in a row to prevent uneven spacing
             marginRight: (index + 1) % numColumns === 0 ? 0 : 0
           }}

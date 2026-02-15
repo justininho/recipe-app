@@ -3,40 +3,42 @@ import React from "react";
 
 export default function RecipesLayout() {
   return (
-  <Stack
+    <Stack
       screenOptions={{
         headerShown: false,
         headerShadowVisible: false,
+        headerBackButtonDisplayMode: 'default',
         headerBackVisible: true,
       }}
     >
       <Stack.Screen
         name="index"
         options={{
-          headerShown: false,
+          title: 'Recipes',
         }}
       />
       <Stack.Screen
         name="new"
         options={{
           title: 'New Recipe',
-          headerShown: true,
           presentation: 'modal', // Makes it slide up like a modal
         }}
       />
       <Stack.Screen
         name="view/[id]"
+        options={{
+          title: 'Recipe Details',
+        }}
       />
       <Stack.Screen
         name="edit/[id]"
         options={{
           title: 'Edit Recipe',
-          headerShown: true,
           presentation: 'modal', // Makes it slide up like a modal
         }}
       />
       <Stack.Screen name="tags/[tag]"/>
-      <Stack.Screen name="groups/[group]" />
+      <Stack.Screen name="groups/[group]"/>
     </Stack>
   );
 }
