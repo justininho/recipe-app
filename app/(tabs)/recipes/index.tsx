@@ -1,13 +1,8 @@
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {Text} from '@/components/ui/text';
-import {Plus, SortAsc, FilterXIcon} from 'lucide-react-native';
 import {MOCK_FAVORITES, MOCK_GROUPS, MOCK_RECIPES} from "@/features/recipes/mocks/recipe.mocks";
-import {RecipeList} from "@/features/recipes/components/recipe-list";
-import {Stack, useRouter} from "expo-router";
-import {ContextAction, ContextFAB} from "@/components/ui/context-fab";
 import {
   Option,
   Select,
@@ -18,25 +13,19 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {TriggerRef} from "@rn-primitives/select";
 import {AllRecipesView} from "@/features/recipes/components/recipe-views/all-recipes-view";
 import {FavoriteRecipesView} from "@/features/recipes/components/recipe-views/favorite-recipes-view";
 import {RecipesByGroupsView} from "@/features/recipes/components/recipe-views/by-groups-view";
 import {RecipesByTagsView} from "@/features/recipes/components/recipe-views/by-tags-view";
-import RecipesHeader from "@/features/recipes/components/recipes-header";
 import {ViewBy} from "@/features/recipes/types/recipe.types";
-
-
+import {Stack} from "expo-router";
+import RecipesHeader from "@/features/recipes/components/recipes-header";
 
 export default function RecipesScreen() {
   const [recipes] = useState(MOCK_RECIPES);
   const [favorites] = useState(MOCK_FAVORITES);
   const [groups] = useState(MOCK_GROUPS);
-
-  const router = useRouter();
-
-
 
   //
   // accounts for notch and safe viewing area
@@ -65,51 +54,57 @@ export default function RecipesScreen() {
   const [view, setView] = useState<ViewBy>('all');
 
   const onViewByChange = (option?: Option) => {
-    if(option?.value) setView(option.value as ViewBy);
+    if (option?.value) setView(option.value as ViewBy);
   }
 
-  // TODO: add vs edit
-  // const handleOpenForm = () => {
-  //   router.push('/form');
-  // }
-
-  // const contextActions: ContextAction[] = [
-  //   {
-  //     icon: Plus,
-  //     label: 'add',
-  //     onPress: () => handleOpenForm(),
-  //   },
-  //   {
-  //     icon: FilterXIcon,
-  //     label: 'Filter',
-  //     onPress: () => console.log('Filter recipes'),
-  //   },
-  //   {
-  //     icon: SortAsc,
-  //     label: 'Sort',
-  //     onPress: () => console.log('Sort recipes'),
-  //   },
-  // ];
-
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <StatusBar style="auto"/>
 
-      {/*todo: fix count*/}
-      <RecipesHeader
-        title="My Recipes"
-        count={recipes.length}
-        showSelect={true}
-        viewBy={view}
-        onViewByChange={onViewByChange}
+    <SafeAreaView className="flex-1 bg-background">
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: () => (
+            <View className="px-2" style={{paddingLeft: contentInsets.left}}>
+              <RecipesHeader
+                title="My Recipes"
+                count={recipes.length}
+              />
+            </View>
+          ),
+          headerRight: () => (
+            <View className="px-2" style={{paddingRight: contentInsets.right}}>
+              <Select
+                value={viewOptions.filter(option => option.value === view)[0]}
+                defaultValue={viewOptions[0]}
+                onValueChange={onViewByChange}
+              >
+                <SelectTrigger className='w-[180px]' ref={selectRef} onTouchStart={onTouchStart}>
+                  <SelectValue placeholder='Select a group'/>
+                </SelectTrigger>
+                <SelectContent insets={contentInsets} className='w-[180px]'>
+                  <SelectGroup>
+                    <SelectLabel>View</SelectLabel>
+                    {viewOptions.map((option) => (
+                      <SelectItem key={option.value} label={option.label} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </View>
+
+          )
+        }}
       />
 
-      { view === 'all' && <AllRecipesView recipes={recipes} /> }
-      { view === 'favorites' && <FavoriteRecipesView recipes={recipes} favorites={favorites} /> }
-      { view === 'groups' && <RecipesByGroupsView recipes={recipes} groups={groups} /> }
-      { view === 'tags' && <RecipesByTagsView recipes={recipes} /> }
+      <StatusBar style="auto"/>
 
-      {/*<ContextFAB actions={contextActions} />*/}
+      {view === 'all' && <AllRecipesView recipes={recipes}/>}
+      {view === 'favorites' && <FavoriteRecipesView recipes={recipes} favorites={favorites}/>}
+      {view === 'groups' && <RecipesByGroupsView recipes={recipes} groups={groups}/>}
+      {view === 'tags' && <RecipesByTagsView recipes={recipes}/>}
+
     </SafeAreaView>
   );
 }

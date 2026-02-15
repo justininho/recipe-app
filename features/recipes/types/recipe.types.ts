@@ -7,7 +7,7 @@ export type Recipe = {
   servings: number;
   imageUrl?: string;
   ingredients: Ingredient[];
-  instructions: string[];
+  instructions: Instruction[];
 
   // view by
   // move to recipe tags

@@ -61,7 +61,7 @@ export default function ImageCard({images, href, cardContent}: ImageCardProps) {
 
   if(href) {
     return (
-      <Link href={href} asChild>
+      <Link href={href} asChild push>
         <Pressable className="active:scale-95 rounded-sm">
           {card}
         </Pressable>
@@ -70,5 +70,4 @@ export default function ImageCard({images, href, cardContent}: ImageCardProps) {
   }
 
   return card;
-
 }

@@ -6,21 +6,17 @@ import {Text} from "@/components/ui/text";
 
 export type RecipeListProps = {
   recipes: Recipe[];
-  onPress?: (recipe: Recipe) => void;
   numColumns?: number;
 }
 
-export const RecipeList: FC<RecipeListProps> = ({recipes, onPress, numColumns = 2}: RecipeListProps) => {
-  const defaultOnPress = (recipe: Recipe) => {
-    console.log("Recipe: {recipe} clicked", recipe);
-  }
+export const RecipeList: FC<RecipeListProps> = ({recipes, numColumns = 2}: RecipeListProps) => {
   return (
     <FlatList
       data={recipes}
       keyExtractor={(item) => item.id}
       numColumns={numColumns}
       key={numColumns} // Important: Forces re-render when numColumns changes
-      contentContainerStyle={{padding: 16, paddingBottom: 100   }}
+      contentContainerStyle={{padding: 16, paddingBottom: 100}}
       showsVerticalScrollIndicator={false}
       renderItem={({item, index}) => (
         <View
@@ -33,7 +29,7 @@ export const RecipeList: FC<RecipeListProps> = ({recipes, onPress, numColumns = 
         >
           <RecipeCard
             recipe={item}
-            onPress={onPress ?? defaultOnPress}
+            href={`/recipes/view/${item.id}`}
           />
         </View>
       )}

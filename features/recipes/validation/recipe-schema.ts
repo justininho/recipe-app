@@ -13,7 +13,7 @@ export const recipeSchema = z.object({
   ingredients: z.array(
     z.object({
       name: z.string().min(1, 'Ingredient name is required'),
-      amount: z.string().min(1, 'Amount is required'),
+      amount: z.number().min(0, 'Amount is required'),
       unit: z.string().optional(),
     })
   ).min(1, 'At least one ingredient is required'),

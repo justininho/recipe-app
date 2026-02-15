@@ -1,4 +1,3 @@
-import {Href} from "expo-router";
 import ImageCard from "@/features/recipes/components/image-card";
 import {View} from "react-native";
 import {Text} from "@/components/ui/text";
@@ -10,12 +9,10 @@ export type RecipeGroupCardProps = {
 }
 
 export default function RecipeGroupCard({group, count, images}: RecipeGroupCardProps) {
-  const href: Href = `/recipes/groups/${group}`;
-
   return (
     <ImageCard
       images={images}
-      href={href}
+      href={`/recipes/groups/${group}`}
       cardContent={
         <View>
           <Text className="font-semibold text-lg">{group}</Text>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {FC, useEffect} from 'react';
 import { View, ScrollView, Alert } from 'react-native';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,8 +8,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { recipeSchema, RecipeFormData } from '@/features/recipes/validation/recipe-schema';
+import {Recipe} from "@/features/recipes/types/recipe.types";
+import {NumberInput} from "@/components/ui/number-input";
 
-export default function AddRecipeScreen() {
+export type RecipeFormProps = {
+  recipe?: Recipe;
+  onSave: () => void;
+}
+
+export const RecipeForm: FC<RecipeFormProps> = ({
+  recipe,
+  onSave,
+}) => {
   const {
     control,
     handleSubmit,
@@ -23,12 +33,30 @@ export default function AddRecipeScreen() {
       prepTime: 0,
       cookTime: 0,
       servings: 4,
-      ingredients: [{ name: '', amount: '', unit: '' }],
+      ingredients: [{ name: '', amount: 0, unit: '' }],
       instructions: [{ step: 1, text: '' }],
       tags: [],
       imageUrl: '',
     },
   });
+
+  useEffect(() => {
+    if(recipe) {
+      reset(recipe);
+    }
+  }, [recipe])
+
+  const onSubmit = async (data: RecipeFormData) => {
+    try {
+      // TODO: Replace with actual API call
+      console.log('Recipe data:', data);
+      Alert.alert('Success', 'Recipe added successfully!');
+      onSave();
+      reset();
+    } catch {
+      Alert.alert('Error', 'Failed to add recipe. Please try again.');
+    }
+  };
 
   const { fields: ingredientFields, append: appendIngredient, remove: removeIngredient } = useFieldArray({
     control,
@@ -40,22 +68,9 @@ export default function AddRecipeScreen() {
     name: 'instructions',
   });
 
-  const onSubmit = async (data: RecipeFormData) => {
-    try {
-      // TODO: Replace with actual API call
-      console.log('Recipe data:', data);
-      Alert.alert('Success', 'Recipe added successfully!');
-      reset();
-    } catch (error) {
-      Alert.alert('Error', 'Failed to add recipe. Please try again.');
-    }
-  };
-
   return (
     <ScrollView className="flex-1 bg-background">
       <View className="p-4 gap-4">
-        <Text className="text-3xl font-bold">Add New Recipe</Text>
-
         {/* Basic Information */}
         <Card>
           <CardHeader>
@@ -198,10 +213,11 @@ export default function AddRecipeScreen() {
                         control={control}
                         name={`ingredients.${index}.amount`}
                         render={({ field: { onChange, onBlur, value } }) => (
-                          <Input
+                          <NumberInput
+                            keyboardType={"number-pad"}
                             placeholder="Amount"
                             onBlur={onBlur}
-                            onChangeText={onChange}
+                            onChange={onChange}
                             value={value}
                             className="flex-1"
                           />
@@ -241,7 +257,7 @@ export default function AddRecipeScreen() {
             ))}
             <Button
               variant="outline"
-              onPress={() => appendIngredient({ name: '', amount: '', unit: '' })}
+              onPress={() => appendIngredient({ name: '', amount: 0, unit: '' })}
             >
               <Plus size={18} className="text-foreground mr-2" />
               <Text>Add Ingredient</Text>

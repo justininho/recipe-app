@@ -15,14 +15,14 @@ export default function GroupDetailScreen() {
     <SafeAreaView className="flex-1 bg-background">
       <Stack.Screen
         options={{
-          headerShown: false
+          headerShown: true,
+          headerTitle: () => (
+            <RecipesHeader
+              title={group}
+              count={recipes.length}
+            />
+          ),
         }}
-      />
-
-      <RecipesHeader
-        title={group}
-        count={recipes.length}
-        showBackButton={true}
       />
 
       <RecipeList recipes={recipes} numColumns={2} />

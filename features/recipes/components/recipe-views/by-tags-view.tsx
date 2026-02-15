@@ -1,7 +1,6 @@
 import {Recipe} from '@/features/recipes/types/recipe.types';
 import {FlatList, View} from 'react-native';
 import {RecipeTagCard} from "@/features/recipes/components/recipe-tag-card";
-import {useMemo} from "react";
 import {getImageUrls} from "@/features/recipes/utils";
 
 type RecipesByTagsViewProps = {
@@ -30,13 +29,14 @@ export function RecipesByTagsView({recipes, numColumns = 2}: RecipesByTagsViewPr
       contentContainerStyle={{padding: 16, paddingBottom: 100}}
       showsVerticalScrollIndicator={false}
       renderItem={({item, index}) => (
-        <View key={item[0]}
-              style={{
-                flex: 1 / numColumns,
-                padding: 8,
-                // Add margin for the last item in a row to prevent uneven spacing
-                marginRight: (index + 1) % numColumns === 0 ? 0 : 0
-              }}
+        <View
+          key={item[0]}
+          style={{
+            flex: 1 / numColumns,
+            padding: 8,
+            // Add margin for the last item in a row to prevent uneven spacing
+            marginRight: (index + 1) % numColumns === 0 ? 0 : 0
+          }}
         >
           <RecipeTagCard tag={item[0]} count={item[1].length} images={getImageUrls(item[1])}/>
         </View>
