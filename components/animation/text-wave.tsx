@@ -27,12 +27,13 @@ export const TextWave: FC<TextWaveProps> = ({ text }) => {
   useEffect(() => {
     animationProgress.value = withRepeat(
       withTiming(1, { duration: 1500, easing: Easing.linear }),
+      // todo: take in loop count input
       -1, // infinite
       false,
       (finished) => {
         if (finished) {
           isAnimating.value = false;
-          animationProgress.value = 0; // reset to 0
+          animationProgress.value = 0;
         }
       }
     );
@@ -66,11 +67,11 @@ const AnimatedCharacter: FC<AnimatedCharacterProps> =({ char, index, textLength,
     }
 
     const time = animationProgress.value;
-    const speed = Math.PI * 2;
+    const speed = Math.PI * 4;
     const x = index;
     // One smooth wave across entire text
     const frequency = (Math.PI * 2) / (textLength * 2);
-    const amplitude = 3; // height of wave
+    const amplitude = 16; // height of wave
     const yOffset = amplitude * Math.sin(frequency * x + time * speed);
 
     // Shimmer follows wave: brightest at peak, dimmest at trough
@@ -78,10 +79,10 @@ const AnimatedCharacter: FC<AnimatedCharacterProps> =({ char, index, textLength,
     const normalizedPosition = (yOffset + amplitude) / (amplitude * 2); // 0 to 1
 
     // Map to opacity range
-    const minOpacity = 0.6;
+    const minOpacity = 0.5;
     const maxOpacity = 0.95;
     const opacity = minOpacity + (maxOpacity - minOpacity) * normalizedPosition;
-
+    // todo: take in color inputs
     const color = `rgba(0, 0, 0, ${0.3 + 0.7 * opacity})`;
 
 
@@ -93,6 +94,7 @@ const AnimatedCharacter: FC<AnimatedCharacterProps> =({ char, index, textLength,
   });
 
   return (
+    // todo take in font size input
     <Animated.Text style={[{ fontSize: 40 }, animatedStyle]}>
       {char}
     </Animated.Text>
