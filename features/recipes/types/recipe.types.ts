@@ -24,6 +24,9 @@ export type Ingredient = {
   name: string;
   amount: number;
   unit: string;
+  
+  prepNote?: string;
+  note?: string;
   // todo: maybe add tooltip to prep note
   // todo: prep note
   // todo: note
@@ -32,12 +35,14 @@ export type Ingredient = {
 // todo: rename step
 export type Instruction = {
   id: string;
-  step: number;
+  order: number;
   description: string;
+  note?: string;
   ingredients?: Ingredient[];
+  minutes?: number;
   seconds?: number;
-  // todo: add type (prep, cook, serve, etc)
-  // todo: equipment
+  type?: 'prep' | 'cook' | 'serve' | 'bake' | 'other';
+  equipment?: string[];
 }
 
 // todo: move to recipe tags

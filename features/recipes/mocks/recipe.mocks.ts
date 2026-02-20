@@ -23,19 +23,19 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i1-1',
-        step: 1,
+        order: 1,
         description: 'Bring a large pot of salted water to a boil. Add the spaghetti and cook until al dente according to package directions. Reserve 1 cup of pasta water before draining.',
         seconds: 600,
       },
       {
         id: 'i1-2',
-        step: 2,
+        order: 2,
         description: 'While pasta cooks, sauté the pancetta in a large skillet over medium heat until crispy, about 5 minutes. Remove from heat.',
         seconds: 300,
       },
       {
         id: 'i1-3',
-        step: 3,
+        order: 3,
         description: 'In a bowl, whisk together the egg yolks, whole egg, Pecorino Romano, Parmesan, and a generous amount of black pepper.',
         ingredients: [
           { name: 'egg yolks', amount: 4, unit: '' },
@@ -46,7 +46,7 @@ export const MOCK_RECIPES: Recipe[] = [
       },
       {
         id: 'i1-4',
-        step: 4,
+        order: 4,
         description: 'Add the hot drained pasta to the skillet with pancetta. Remove from heat entirely. Pour the egg mixture over the pasta, tossing quickly and adding pasta water a splash at a time until a creamy sauce forms. Serve immediately.',
       },
     ],
@@ -76,25 +76,25 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i2-1',
-        step: 1,
+        order: 1,
         description: 'Mix soy sauce, oyster sauce, sesame oil, and cornstarch in a small bowl. Toss chicken slices in half the sauce mixture and let marinate for 5 minutes.',
         seconds: 300,
       },
       {
         id: 'i2-2',
-        step: 2,
+        order: 2,
         description: 'Heat vegetable oil in a wok or large skillet over high heat until smoking. Add chicken and stir-fry for 3–4 minutes until cooked through. Remove and set aside.',
         seconds: 240,
       },
       {
         id: 'i2-3',
-        step: 3,
+        order: 3,
         description: 'Add garlic and ginger to the wok and stir-fry for 30 seconds. Add broccoli, bell pepper, and snap peas and stir-fry for 3 minutes until tender-crisp.',
         seconds: 180,
       },
       {
         id: 'i2-4',
-        step: 4,
+        order: 4,
         description: 'Return chicken to the wok, pour in remaining sauce, and toss everything together for 1 minute. Serve immediately over steamed rice.',
       },
     ],
@@ -124,17 +124,17 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i3-1',
-        step: 1,
+        order: 1,
         description: 'Make the dressing: mash garlic and anchovy fillets into a paste using the side of a knife. Whisk together with egg yolk, Dijon mustard, lemon juice, and Worcestershire sauce.',
       },
       {
         id: 'i3-2',
-        step: 2,
+        order: 2,
         description: 'Slowly drizzle in olive oil while whisking constantly until the dressing is emulsified and creamy. Season with black pepper.',
       },
       {
         id: 'i3-3',
-        step: 3,
+        order: 3,
         description: 'Toss the romaine lettuce with dressing until evenly coated. Top with shaved Parmesan and croutons. Serve immediately.',
       },
     ],
@@ -165,25 +165,25 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i4-1',
-        step: 1,
+        order: 1,
         description: 'Cook onion in a skillet over medium-high heat for 2 minutes. Add garlic and cook 30 seconds more.',
         seconds: 150,
       },
       {
         id: 'i4-2',
-        step: 2,
+        order: 2,
         description: 'Add ground beef and cook, breaking it up, until browned and cooked through, about 6 minutes. Drain excess fat.',
         seconds: 360,
       },
       {
         id: 'i4-3',
-        step: 3,
+        order: 3,
         description: 'Stir in chili powder, cumin, smoked paprika, and salt. Add 3 tbsp water and simmer for 2 minutes until the sauce thickens.',
         seconds: 120,
       },
       {
         id: 'i4-4',
-        step: 4,
+        order: 4,
         description: 'Warm taco shells per package directions. Fill each shell with seasoned beef, then top with cheddar, lettuce, tomato, and sour cream.',
       },
     ],
@@ -210,18 +210,18 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i5-1',
-        step: 1,
+        order: 1,
         description: 'Preheat oven to 260°C (500°F) with a pizza stone or baking sheet inside for at least 30 minutes.',
         seconds: 1800,
       },
       {
         id: 'i5-2',
-        step: 2,
+        order: 2,
         description: 'On a lightly floured surface, stretch dough by hand to a 12-inch round. Transfer to a sheet of parchment paper.',
       },
       {
         id: 'i5-3',
-        step: 3,
+        order: 3,
         description: 'Mix crushed tomatoes with garlic, olive oil, salt, and pepper. Spread evenly over dough, leaving a 1-inch border.',
         ingredients: [
           { name: 'crushed San Marzano tomatoes', amount: 120, unit: 'ml' },
@@ -230,7 +230,7 @@ export const MOCK_RECIPES: Recipe[] = [
       },
       {
         id: 'i5-4',
-        step: 4,
+        order: 4,
         description: 'Scatter torn mozzarella over the sauce. Slide pizza onto the hot stone and bake for 10–12 minutes until crust is golden and cheese is bubbling. Top with fresh basil immediately after baking.',
         seconds: 720,
       },
@@ -262,24 +262,24 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i6-1',
-        step: 1,
+        order: 1,
         description: 'Soak rice noodles in room temperature water for 30 minutes until pliable but not soft. Drain and set aside.',
         seconds: 1800,
       },
       {
         id: 'i6-2',
-        step: 2,
+        order: 2,
         description: 'Whisk together fish sauce, tamarind paste, and sugar to make the sauce. Set aside.',
       },
       {
         id: 'i6-3',
-        step: 3,
+        order: 3,
         description: 'Heat oil in a wok over high heat. Add garlic and shrimp, stir-fry for 2 minutes. Push to one side, crack in eggs, and scramble until just set.',
         seconds: 120,
       },
       {
         id: 'i6-4',
-        step: 4,
+        order: 4,
         description: 'Add drained noodles and sauce to the wok. Toss everything together for 2 minutes until noodles absorb the sauce. Add bean sprouts and green onions, toss for 30 seconds. Serve topped with peanuts and lime wedges.',
         seconds: 150,
       },
@@ -308,18 +308,18 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i7-1',
-        step: 1,
+        order: 1,
         description: 'Preheat oven to 190°C (375°F). Whisk together flour, baking soda, and salt in a bowl. Set aside.',
       },
       {
         id: 'i7-2',
-        step: 2,
+        order: 2,
         description: 'Beat butter with both sugars using a hand mixer for 3–4 minutes until light and fluffy. Beat in eggs one at a time, then add vanilla.',
         seconds: 240,
       },
       {
         id: 'i7-3',
-        step: 3,
+        order: 3,
         description: 'Fold in the flour mixture until just combined. Stir in chocolate chips.',
         ingredients: [
           { name: 'chocolate chips', amount: 340, unit: 'g' },
@@ -327,7 +327,7 @@ export const MOCK_RECIPES: Recipe[] = [
       },
       {
         id: 'i7-4',
-        step: 4,
+        order: 4,
         description: 'Drop rounded tablespoons of dough onto ungreased baking sheets, spacing 2 inches apart. Bake for 9–11 minutes until edges are golden but centers still look slightly underdone. Cool on baking sheet for 5 minutes before transferring.',
         seconds: 660,
       },
@@ -358,17 +358,17 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i8-1',
-        step: 1,
+        order: 1,
         description: 'Combine cucumber, cherry tomatoes, red onion, bell pepper, and olives in a large bowl.',
       },
       {
         id: 'i8-2',
-        step: 2,
+        order: 2,
         description: 'Whisk together olive oil, red wine vinegar, oregano, salt, and pepper. Pour over vegetables and toss gently.',
       },
       {
         id: 'i8-3',
-        step: 3,
+        order: 3,
         description: 'Arrange feta cubes on top (do not toss, to keep cubes intact). Serve immediately or refrigerate for up to 1 hour before serving.',
       },
     ],
@@ -397,24 +397,24 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i9-1',
-        step: 1,
+        order: 1,
         description: 'Whisk together soy sauce, mirin, sake, brown sugar, garlic, ginger, and sesame oil to make the teriyaki sauce.',
       },
       {
         id: 'i9-2',
-        step: 2,
+        order: 2,
         description: 'Place salmon in a shallow dish, pour half the sauce over it, and marinate for 10 minutes.',
         seconds: 600,
       },
       {
         id: 'i9-3',
-        step: 3,
+        order: 3,
         description: 'Heat an oven-safe skillet over medium-high heat. Sear salmon skin-side up for 3 minutes. Flip and cook for 2 more minutes.',
         seconds: 300,
       },
       {
         id: 'i9-4',
-        step: 4,
+        order: 4,
         description: 'Pour remaining sauce into the pan and cook for 2–3 minutes, basting the salmon, until sauce thickens and salmon is cooked through. Garnish with green onions and sesame seeds.',
         seconds: 180,
       },
@@ -445,25 +445,25 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i10-1',
-        step: 1,
+        order: 1,
         description: 'Season chicken breasts with Italian seasoning, salt, and pepper. Cook in olive oil over medium-high heat for 5–6 minutes per side until cooked through. Rest for 5 minutes, then slice.',
         seconds: 720,
       },
       {
         id: 'i10-2',
-        step: 2,
+        order: 2,
         description: 'Cook fettuccine in salted boiling water until al dente. Reserve 1/2 cup pasta water before draining.',
         seconds: 600,
       },
       {
         id: 'i10-3',
-        step: 3,
+        order: 3,
         description: 'In the same pan used for chicken, melt butter over medium heat. Add garlic and cook for 1 minute. Pour in cream and simmer for 3–4 minutes until slightly thickened.',
         seconds: 300,
       },
       {
         id: 'i10-4',
-        step: 4,
+        order: 4,
         description: 'Remove from heat and stir in Parmesan until melted and smooth. Toss with fettuccine, adding pasta water as needed. Top with sliced chicken and parsley.',
       },
     ],
@@ -494,25 +494,25 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i11-1',
-        step: 1,
+        order: 1,
         description: 'Cook rice according to package directions. Fluff with a fork and stir in half the lime juice and cilantro.',
         seconds: 1200,
       },
       {
         id: 'i11-2',
-        step: 2,
+        order: 2,
         description: 'In a skillet over medium heat, warm black beans with cumin, chili powder, and a pinch of salt for 3 minutes.',
         seconds: 180,
       },
       {
         id: 'i11-3',
-        step: 3,
+        order: 3,
         description: 'In the same skillet, sauté bell pepper and corn over high heat for 3–4 minutes until lightly charred.',
         seconds: 240,
       },
       {
         id: 'i11-4',
-        step: 4,
+        order: 4,
         description: 'Assemble bowls: start with rice, then add beans, charred vegetables, tomatoes, and avocado. Drizzle with remaining lime juice and top with sour cream and extra cilantro.',
       },
     ],
@@ -540,12 +540,12 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i12-1',
-        step: 1,
+        order: 1,
         description: 'Preheat oven to 175°C (350°F). Grease a 9x5 inch loaf pan.',
       },
       {
         id: 'i12-2',
-        step: 2,
+        order: 2,
         description: 'Mash bananas thoroughly in a large bowl. Stir in melted butter, sugar, beaten egg, vanilla, and sour cream until well combined.',
         ingredients: [
           { name: 'very ripe bananas', amount: 3, unit: '' },
@@ -553,12 +553,12 @@ export const MOCK_RECIPES: Recipe[] = [
       },
       {
         id: 'i12-3',
-        step: 3,
+        order: 3,
         description: 'Fold in flour, baking soda, and salt until just combined — do not overmix.',
       },
       {
         id: 'i12-4',
-        step: 4,
+        order: 4,
         description: 'Pour batter into prepared pan and bake for 55–65 minutes until a toothpick inserted in the center comes out clean. Cool in pan for 10 minutes before turning out.',
         seconds: 3600,
       },
@@ -590,25 +590,25 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i13-1',
-        step: 1,
+        order: 1,
         description: 'Bring chicken stock to a boil in a large pot. Add lemongrass, galangal, and kaffir lime leaves. Simmer for 5 minutes to infuse.',
         seconds: 300,
       },
       {
         id: 'i13-2',
-        step: 2,
+        order: 2,
         description: 'Add chilies and mushrooms, cook for 3 minutes.',
         seconds: 180,
       },
       {
         id: 'i13-3',
-        step: 3,
+        order: 3,
         description: 'Add shrimp and cook for 2–3 minutes until pink and cooked through.',
         seconds: 150,
       },
       {
         id: 'i13-4',
-        step: 4,
+        order: 4,
         description: 'Remove from heat. Stir in fish sauce, lime juice, sugar, and coconut milk. Taste and adjust seasoning — it should be sour, spicy, and slightly salty. Garnish with cilantro and serve.',
       },
     ],
@@ -635,17 +635,17 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i14-1',
-        step: 1,
+        order: 1,
         description: 'Slice the ciabatta roll in half horizontally. Drizzle olive oil on both cut sides.',
       },
       {
         id: 'i14-2',
-        step: 2,
+        order: 2,
         description: 'Layer mozzarella slices on the bottom half. Top with tomato slices and basil leaves.',
       },
       {
         id: 'i14-3',
-        step: 3,
+        order: 3,
         description: 'Drizzle with balsamic glaze, season with flaky salt and black pepper. Close the sandwich and serve immediately.',
       },
     ],
@@ -675,23 +675,23 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i15-1',
-        step: 1,
+        order: 1,
         description: 'Preheat oven to 150°C (300°F). Remove the membrane from the back of the ribs. Mix all dry spices and brown sugar into a rub and coat ribs generously on both sides.',
       },
       {
         id: 'i15-2',
-        step: 2,
+        order: 2,
         description: 'Wrap ribs tightly in foil and place on a baking sheet. Bake for 2.5 hours until very tender.',
         seconds: 9000,
       },
       {
         id: 'i15-3',
-        step: 3,
+        order: 3,
         description: 'Unwrap ribs and carefully drain any liquid. Mix BBQ sauce with apple cider vinegar and brush generously over ribs.',
       },
       {
         id: 'i15-4',
-        step: 4,
+        order: 4,
         description: 'Increase oven to 220°C (425°F) or use a grill. Cook ribs uncovered for 15–20 minutes, brushing with more sauce every 5 minutes, until caramelized. Rest for 5 minutes before cutting.',
         seconds: 1200,
       },
@@ -724,24 +724,24 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i16-1',
-        step: 1,
+        order: 1,
         description: 'Preheat oven to 200°C (400°F). Toss sweet potato and chickpeas with 2 tbsp olive oil, smoked paprika, cumin, and salt. Spread on a baking sheet and roast for 25–30 minutes until golden.',
         seconds: 1800,
       },
       {
         id: 'i16-2',
-        step: 2,
+        order: 2,
         description: 'Meanwhile, cook quinoa in 360ml water with a pinch of salt. Bring to a boil, reduce heat, cover and simmer for 15 minutes. Fluff with a fork.',
         seconds: 900,
       },
       {
         id: 'i16-3',
-        step: 3,
+        order: 3,
         description: 'Make the dressing: whisk together tahini, lemon juice, maple syrup, remaining olive oil, and 2 tbsp water until smooth.',
       },
       {
         id: 'i16-4',
-        step: 4,
+        order: 4,
         description: 'Assemble bowls with quinoa as the base. Arrange spinach, roasted sweet potato and chickpeas, avocado, and red cabbage over the top. Drizzle generously with tahini dressing.',
       },
     ],
@@ -770,24 +770,24 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i17-1',
-        step: 1,
+        order: 1,
         description: 'Pat shrimp dry and season with salt, pepper, and red pepper flakes.',
       },
       {
         id: 'i17-2',
-        step: 2,
+        order: 2,
         description: 'Heat olive oil and butter in a large skillet over high heat. Add shrimp in a single layer and cook undisturbed for 1–2 minutes until pink on the bottom. Flip and cook 1 minute more.',
         seconds: 180,
       },
       {
         id: 'i17-3',
-        step: 3,
+        order: 3,
         description: 'Reduce heat to medium. Add garlic and cook for 30 seconds until fragrant. Add lemon juice and zest, toss everything together.',
         seconds: 60,
       },
       {
         id: 'i17-4',
-        step: 4,
+        order: 4,
         description: 'Remove from heat, stir in parsley. Serve immediately over pasta, rice, or crusty bread.',
       },
     ],
@@ -818,25 +818,25 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i18-1',
-        step: 1,
+        order: 1,
         description: 'In a large pan, sauté mushrooms in 1 tbsp olive oil over high heat for 5 minutes until golden. Season with salt and pepper and set aside.',
         seconds: 300,
       },
       {
         id: 'i18-2',
-        step: 2,
+        order: 2,
         description: 'In the same pan, heat remaining olive oil over medium heat. Cook shallots for 3 minutes, add garlic and thyme for 1 minute. Add rice and toast for 2 minutes.',
         seconds: 360,
       },
       {
         id: 'i18-3',
-        step: 3,
+        order: 3,
         description: 'Pour in white wine and stir until absorbed. Add warm stock one ladleful at a time, stirring constantly and waiting until each addition is absorbed before adding the next. Continue for about 20 minutes until rice is creamy and al dente.',
         seconds: 1200,
       },
       {
         id: 'i18-4',
-        step: 4,
+        order: 4,
         description: 'Remove from heat. Stir in butter and Parmesan vigorously until glossy. Fold in reserved mushrooms. Rest for 2 minutes, then serve.',
         seconds: 120,
       },
@@ -867,23 +867,23 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i19-1',
-        step: 1,
+        order: 1,
         description: 'Toss shredded chicken with cumin and chili powder.',
       },
       {
         id: 'i19-2',
-        step: 2,
+        order: 2,
         description: 'Heat a large skillet over medium heat. Lightly butter one side of a tortilla and place butter-side down in the skillet. Spread half the cheese over one half of the tortilla.',
       },
       {
         id: 'i19-3',
-        step: 3,
+        order: 3,
         description: 'Top the cheese with half the chicken, bell pepper, green onions, and jalapeño. Fold the empty half of the tortilla over the filling. Cook for 2–3 minutes per side until golden and crispy. Repeat with the second quesadilla.',
         seconds: 360,
       },
       {
         id: 'i19-4',
-        step: 4,
+        order: 4,
         description: 'Cut each quesadilla into wedges and serve with sour cream and salsa.',
       },
     ],
@@ -913,22 +913,22 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i20-1',
-        step: 1,
+        order: 1,
         description: 'Preheat oven to 215°C (425°F). Toss apple slices with both sugars, cinnamon, nutmeg, lemon juice, and cornstarch until coated.',
       },
       {
         id: 'i20-2',
-        step: 2,
+        order: 2,
         description: 'Press one pie crust into a 9-inch pie plate. Fill with the apple mixture and dot with cubed butter.',
       },
       {
         id: 'i20-3',
-        step: 3,
+        order: 3,
         description: 'Lay the second crust over the top, trim excess, and crimp the edges to seal. Cut several slits in the top crust. Brush with beaten egg and sprinkle with coarse sugar.',
       },
       {
         id: 'i20-4',
-        step: 4,
+        order: 4,
         description: 'Bake for 15 minutes at 215°C, then reduce heat to 175°C (350°F) and bake for an additional 35–40 minutes until crust is golden and filling is bubbling. Cool for at least 1 hour before serving.',
         seconds: 3300,
       },
@@ -963,25 +963,25 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i21-1',
-        step: 1,
+        order: 1,
         description: 'Char the halved onion and ginger slices directly over a gas flame or under the broiler for 3–4 minutes until blackened in spots.',
         seconds: 240,
       },
       {
         id: 'i21-2',
-        step: 2,
+        order: 2,
         description: 'Toast the cinnamon stick, star anise, and cloves in a dry pot for 1 minute until fragrant. Add beef broth, charred onion and ginger, fish sauce, and sugar. Simmer for 45 minutes.',
         seconds: 2700,
       },
       {
         id: 'i21-3',
-        step: 3,
+        order: 3,
         description: 'Cook rice noodles according to package directions. Drain and divide among bowls.',
         seconds: 300,
       },
       {
         id: 'i21-4',
-        step: 4,
+        order: 4,
         description: 'Strain the hot broth, discarding solids. Arrange raw beef slices over noodles and ladle hot broth directly on top — the heat will cook the beef. Serve with bean sprouts, Thai basil, lime, hoisin, and sriracha.',
       },
     ],
@@ -1014,24 +1014,24 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i22-1',
-        step: 1,
+        order: 1,
         description: 'Pulse chickpeas, onion, garlic, parsley, cumin, coriander, flour, and salt in a food processor until a coarse paste forms — do not over-process. Refrigerate for 15 minutes.',
         seconds: 900,
       },
       {
         id: 'i22-2',
-        step: 2,
+        order: 2,
         description: 'Form the mixture into small patties or balls. Heat oil in a skillet over medium-high heat and fry falafel for 3–4 minutes per side until deeply golden and crispy.',
         seconds: 480,
       },
       {
         id: 'i22-3',
-        step: 3,
+        order: 3,
         description: 'Mix tahini with lemon juice and 2 tbsp water to make a sauce.',
       },
       {
         id: 'i22-4',
-        step: 4,
+        order: 4,
         description: 'Warm pita breads. Fill each with falafel, cucumber, tomato, and a generous drizzle of tahini sauce.',
       },
     ],
@@ -1058,24 +1058,24 @@ export const MOCK_RECIPES: Recipe[] = [
     instructions: [
       {
         id: 'i23-1',
-        step: 1,
+        order: 1,
         description: 'Whisk egg yolks and sugar in a bowl until pale and thick, about 3 minutes. Fold in mascarpone until smooth.',
         seconds: 180,
       },
       {
         id: 'i23-2',
-        step: 2,
+        order: 2,
         description: 'In a separate bowl, whip heavy cream to stiff peaks. Gently fold into the mascarpone mixture.',
       },
       {
         id: 'i23-3',
-        step: 3,
+        order: 3,
         description: 'Mix espresso with coffee liqueur in a shallow dish. Quickly dip each ladyfinger (1–2 seconds per side) and arrange in a single layer in a 9x13 inch dish.',
         seconds: 120,
       },
       {
         id: 'i23-4',
-        step: 4,
+        order: 4,
         description: 'Spread half the mascarpone cream over the ladyfingers. Add a second layer of dipped ladyfingers, then top with remaining cream. Smooth the surface, cover, and refrigerate for at least 4 hours. Dust generously with cocoa powder just before serving.',
         seconds: 14400,
       },

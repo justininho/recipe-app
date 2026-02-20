@@ -76,9 +76,9 @@ export default function RecipeScreen() {
             {/* Instructions */}
             <View>
               <Text className="text-lg font-semibold mb-1">Instructions:</Text>
-              {recipe.instructions.map(({step, description}, index) => (
+              {recipe.instructions.map(({order, description}, index) => (
                 <Text key={index} className="text-sm text-muted-foreground">
-                  {step}. {description}
+                  {order}. {description}
                 </Text>
               ))}
             </View>

@@ -1,5 +1,5 @@
-import React, {FC, useEffect} from 'react';
-import { View, ScrollView, Alert } from 'react-native';
+import React, {FC, useEffect, useRef} from 'react';
+import {View, Alert, TouchableOpacity} from 'react-native';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Trash2 } from 'lucide-react-native';
@@ -8,8 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { recipeSchema, RecipeFormData } from '@/features/recipes/validation/recipe-schema';
-import {Recipe} from "@/features/recipes/types/recipe.types";
+import {Instruction, Recipe} from "@/features/recipes/types/recipe.types";
 import {NumberInput} from "@/components/ui/number-input";
+import DraggableFlatList, {
+  ScaleDecorator,
+} from 'react-native-draggable-flatlist';
+import {GestureDetector, GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
+import {InstructionItem} from "@/features/recipes/components/instruction/instruction-item";
 
 export type RecipeFormProps = {
   recipe?: Recipe;
@@ -62,8 +67,8 @@ export const RecipeForm: FC<RecipeFormProps> = ({
     control,
     name: 'ingredients',
   });
-
-  const { fields: instructionFields, append: appendInstruction, remove: removeInstruction } = useFieldArray({
+  
+  const { fields: instructionFields, append: appendInstruction, remove: removeInstruction, swap: swapInstructions, replace: replaceInstructions } = useFieldArray({
     control,
     name: 'instructions',
   });
@@ -270,48 +275,40 @@ export const RecipeForm: FC<RecipeFormProps> = ({
           <CardHeader>
             <CardTitle>Instructions</CardTitle>
           </CardHeader>
-          <CardContent className="gap-3">
-            {instructionFields.map((field, index) => (
-              <View key={field.id} className="gap-2">
-                <View className="flex-row gap-2 items-start">
-                  <Text className="text-lg font-semibold mt-2">{index + 1}.</Text>
-                  <View className="flex-1">
-                    <Controller
-                      control={control}
-                      name={`instructions.${index}.text`}
-                      render={({ field: { onChange, onBlur, value } }) => (
-                        <Input
-                          placeholder="Describe this step"
-                          onBlur={onBlur}
-                          onChangeText={onChange}
-                          value={value}
-                          multiline
-                          numberOfLines={2}
-                        />
-                      )}
-                    />
-                  </View>
-                  {instructionFields.length > 1 && (
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      onPress={() => removeInstruction(index)}
-                    >
-                      <Trash2 size={18} className="text-destructive-foreground" />
-                    </Button>
-                  )}
-                </View>
-                {/* Error message for this instruction */}
-                {errors.instructions?.[index]?.text && (
-                  <Text className="text-destructive text-sm ml-6">
-                    {errors.instructions[index].text?.message}
-                  </Text>
+          <CardContent>
+              <DraggableFlatList
+                data={instructionFields}
+                keyExtractor={(item) => item.id}
+                onDragEnd={({ data }) => {
+                  setTimeout(() => {
+                    replaceInstructions(
+                      data.map((item, index) => ({ ...item, order: index + 1 }))
+                    );
+                  }, 0);
+                }}
+                activationDistance={1}
+                scrollEnabled={false}
+                renderItem={({ item, getIndex, drag, isActive }) => (
+                  <InstructionItem
+                    instruction={item as unknown as Instruction}
+                    index={getIndex() ?? 0}
+                    onPress={() => console.log('Edit instruction', item)}
+                    drag={drag}
+                    isActive={isActive}
+                  />
                 )}
-              </View>
-            ))}
+              />
+            
             <Button
               variant="outline"
-              onPress={() => appendInstruction({ step: instructionFields.length + 1, text: '' })}
+              className="mt-2"
+              onPress={() =>
+                appendInstruction({
+                  id: Date.now().toString(),
+                  order: instructionFields.length + 1,
+                  description: '',
+                })
+              }
             >
               <Plus size={18} className="text-foreground mr-2" />
               <Text>Add Step</Text>

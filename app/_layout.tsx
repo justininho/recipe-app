@@ -5,6 +5,7 @@ import 'react-native-reanimated';
 import "../global.css"
 import {useColorScheme } from 'nativewind'
 import {PortalHost} from "@rn-primitives/portal";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -15,12 +16,14 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-      <PortalHost />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
+          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        </Stack>
+        <StatusBar style="auto" />
+        <PortalHost />
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }
