@@ -15,6 +15,8 @@ export const recipeSchema = z.object({
       name: z.string().min(1, 'Ingredient name is required'),
       amount: z.number().min(0, 'Amount is required'),
       unit: z.string().optional(),
+      note: z.string().optional(),
+      prepNote: z.string().optional(),
     })
   ).min(1, 'At least one ingredient is required'),
   instructions: z.array(
