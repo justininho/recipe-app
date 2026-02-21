@@ -8,12 +8,12 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {RecipeFormData, recipeSchema} from '@/features/recipes/validation/recipe-schema';
-import {Instruction, Recipe} from "@/features/recipes/types/recipe.types";
+import {Recipe} from "@/features/recipes/types/recipe.types";
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import {ScrollView} from 'react-native-gesture-handler';
-import {InstructionItem} from "@/features/recipes/components/instruction/instruction-item";
 import {IngredientFormItem} from "@/features/recipes/components/Ingredient/ingredient-form-item";
 import {Icon} from "@/components/ui/icon";
+import {InstructionFormItem} from '@/features/recipes/components/instruction/instruction-form-item';
 
 export type RecipeFormProps = {
   recipe?: Recipe;
@@ -38,7 +38,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
       cookTime: 0,
       servings: 4,
       ingredients: [{name: '', amount: 0, unit: ''}],
-      instructions: [{step: 1, text: ''}],
+      instructions: [{order: 1, description: ''}],
       tags: [],
       imageUrl: '',
     },
@@ -47,9 +47,21 @@ export const RecipeForm: FC<RecipeFormProps> = ({
   // todo: fix this.
   useEffect(() => {
     if (recipe) {
-      reset(recipe);
+      reset({
+        ...recipe,
+        instructions: recipe.instructions.map((instruction, index) => ({
+          id: instruction.id || Date.now().toString(), // Ensure id is set
+          order: index + 1,
+          description: instruction.description,
+          note: instruction.note,
+          minutes: instruction.minutes,
+          seconds: instruction.seconds,
+          type: instruction.type,
+          equipment: instruction.equipment,
+        })),
+      });
     }
-  }, [recipe])
+  }, [recipe, reset]);
   
   const onSubmit = async (data: RecipeFormData) => {
     try {
@@ -72,8 +84,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
     fields: instructionFields,
     append: appendInstruction,
     remove: removeInstruction,
-    swap: swapInstructions,
-    replace: replaceInstructions
+    replace: replaceInstructions,
   } = useFieldArray({
     control,
     name: 'instructions',
@@ -235,13 +246,14 @@ export const RecipeForm: FC<RecipeFormProps> = ({
               }}
               activationDistance={1}
               scrollEnabled={false}
-              renderItem={({item, getIndex, drag, isActive}) => (
-                <InstructionItem
-                  instruction={item as unknown as Instruction}
+              renderItem={({item, getIndex}) => (
+                <InstructionFormItem
+                  id={item.id}
                   index={getIndex() ?? 0}
-                  onPress={() => console.log('Edit instruction', item)}
-                  drag={drag}
-                  isActive={isActive}
+                  control={control}
+                  errors={errors}
+                  onDelete={() => removeInstruction(getIndex() ?? 0)}
+                  canDelete={instructionFields.length > 1}
                 />
               )}
             />
@@ -254,6 +266,11 @@ export const RecipeForm: FC<RecipeFormProps> = ({
                   id: Date.now().toString(),
                   order: instructionFields.length + 1,
                   description: '',
+                  note: '',
+                  minutes: 0,
+                  seconds: 0,
+                  type: 'prep',
+                  equipment: [],
                 })
               }
             >

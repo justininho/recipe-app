@@ -21,8 +21,14 @@ export const recipeSchema = z.object({
   ).min(1, 'At least one ingredient is required'),
   instructions: z.array(
     z.object({
-      step: z.number(),
-      text: z.string().min(1, 'Step description is required'),
+      id: z.string(),
+      order: z.number(),
+      description: z.string().min(1, 'Step description is required'),
+      note: z.string().optional(),
+      minutes: z.number().optional(),
+      seconds: z.number().optional(),
+      type: z.enum(['prep', 'cook', 'bake', 'serve', 'other']).optional(),
+      equipment: z.array(z.string()).optional(),
     })
   ).min(1, 'At least one instruction step is required'),
   tags: z.array(z.string()).optional(),
