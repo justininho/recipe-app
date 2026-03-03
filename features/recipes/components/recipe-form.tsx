@@ -159,7 +159,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
                   <Text className="text-destructive text-sm mt-1">{errors.prepTime.message}</Text>
                 )}
               </View>
-              
+              s
               <View className="flex-1">
                 <Text className="text-sm font-medium mb-1">Cook Time (min)</Text>
                 <Controller
@@ -206,12 +206,8 @@ export const RecipeForm: FC<RecipeFormProps> = ({
         {/* Ingredients */}
         <Card className="gap-2">
           <CardHeader>
-            <CardTitle className="flex">
-              <Text className="flex-1">Ingredients</Text>
-              <Button size="icon" variant="outline" className="ml-auto"
-                      onPress={() => appendIngredient({name: '', amount: 0, unit: ''})}>
-                <Icon as={Plus}/>
-              </Button>
+            <CardTitle>
+              <Text>Ingredients</Text>
             </CardTitle>
           </CardHeader>
           <CardContent className="gap-3">
@@ -225,6 +221,14 @@ export const RecipeForm: FC<RecipeFormProps> = ({
                 canDelete={ingredientFields.length > 1}
               />
             ))}
+            
+            <View className="flex items-end">
+              <Button size="icon" variant="outline"
+                      onPress={() => appendIngredient({name: '', amount: 0, unit: ''})}>
+                <Icon as={Plus}/>
+              </Button>
+            </View>
+            
           </CardContent>
         </Card>
         
@@ -246,7 +250,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
               }}
               activationDistance={1}
               scrollEnabled={false}
-              renderItem={({item, getIndex}) => (
+              renderItem={({item, getIndex, drag, isActive}) => (
                 <InstructionFormItem
                   id={item.id}
                   index={getIndex() ?? 0}
@@ -254,29 +258,33 @@ export const RecipeForm: FC<RecipeFormProps> = ({
                   errors={errors}
                   onDelete={() => removeInstruction(getIndex() ?? 0)}
                   canDelete={instructionFields.length > 1}
+                  drag={drag}
+                  isActive={isActive}
                 />
               )}
             />
             
-            <Button
-              variant="outline"
-              className="mt-2"
-              onPress={() =>
-                appendInstruction({
-                  id: Date.now().toString(),
-                  order: instructionFields.length + 1,
-                  description: '',
-                  note: '',
-                  minutes: 0,
-                  seconds: 0,
-                  type: 'prep',
-                  equipment: [],
-                })
-              }
-            >
-              <Plus size={18} className="text-foreground mr-2"/>
-              <Text>Add Step</Text>
-            </Button>
+            <View className="flex items-end">
+              <Button
+                variant="outline"
+                className="mt-2"
+                onPress={() =>
+                  appendInstruction({
+                    id: Date.now().toString(),
+                    order: instructionFields.length + 1,
+                    description: '',
+                    note: '',
+                    minutes: 0,
+                    seconds: 0,
+                    type: 'prep',
+                    equipment: [],
+                  })
+                }
+              >
+                <Plus size={18} className="text-foreground mr-2"/>
+              </Button>
+            </View>
+            
           </CardContent>
         </Card>
         

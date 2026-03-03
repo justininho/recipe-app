@@ -31,42 +31,29 @@ export const IngredientFormItem: FC<IngredientItemProps> = ({
       
       <Card className="mb-2">
         <CardContent style={{marginTop: 0}}>
-          {/* First Row: Ingredient Name and Delete Button */}
-          <View className="flex-row items-end gap-2">
-            <View className="flex-1">
-              <Text className="text-xs text-muted-foreground mb-1">Ingredient</Text>
-              <Controller
-                control={control}
-                name={`ingredients.${index}.name`}
-                render={({field: {onChange, onBlur, value}}) => (
-                  <Input
-                    placeholder="e.g., All-purpose flour"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                  />
-                )}
-              />
-              {errors?.ingredients?.[index]?.name && (
-                <Text className="text-destructive text-sm mt-1">
-                  {errors.ingredients[index].name?.message}
-                </Text>
+          {/* Row 1: Ingredient Name */}
+          <View>
+            <Text className="text-xs text-muted-foreground mb-1">Ingredient</Text>
+            <Controller
+              control={control}
+              name={`ingredients.${index}.name`}
+              render={({field: {onChange, onBlur, value}}) => (
+                <Input
+                  placeholder="e.g., All-purpose flour"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
               )}
-            </View>
-            <View className="flex" />
-            {canDelete && (
-              <Button
-                variant="outline"
-                size="icon"
-                className="ml-auto"
-                onPress={onDelete}
-              >
-                <Trash2 size={20} color="#ef4444" />
-              </Button>
+            />
+            {errors?.ingredients?.[index]?.name && (
+              <Text className="text-destructive text-sm mt-1">
+                {errors.ingredients[index].name?.message}
+              </Text>
             )}
           </View>
 
-          {/* Second Row: Prep and Note Icon Button */}
+          {/* Row 2: Prep and Note Icon Button */}
           <View className="flex-row items-end gap-3 mt-2">
             <View className="flex-1">
               <Text className="text-xs text-muted-foreground mb-1">Preparation</Text>
@@ -110,8 +97,8 @@ export const IngredientFormItem: FC<IngredientItemProps> = ({
             </Popover>
           </View>
 
-          {/* Third Row: Amount and Unit */}
-          <View className="flex-row gap-2 mt-2">
+          {/* Row 3: Amount, Unit, Delete Button */}
+          <View className="flex-row items-end gap-2 mt-2">
             <View className="flex-1">
               <Text className="text-xs text-muted-foreground mb-1">Amount</Text>
               <Controller
@@ -148,6 +135,16 @@ export const IngredientFormItem: FC<IngredientItemProps> = ({
                 )}
               />
             </View>
+            {canDelete && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="flex-shrink-0"
+                onPress={onDelete}
+              >
+                <Trash2 size={20} color="#ef4444" />
+              </Button>
+            )}
           </View>
         </CardContent>
       </Card>

@@ -1,13 +1,13 @@
 import React, {FC, useRef} from 'react';
-import { View } from 'react-native';
-import { Trash2, MessageSquare } from 'lucide-react-native';
+import {TouchableOpacity, View} from 'react-native';
+import {Trash2, Expand, GripVertical} from 'lucide-react-native';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui/button';
 import { NumberInput } from '@/components/ui/number-input';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { RecipeFormData } from '@/features/recipes/validation/recipe-schema';
-import { Textarea } from '@/components/ui/textarea';
 import { Icon } from '@/components/ui/icon';
 import {
   Select,
@@ -20,27 +20,31 @@ import {
 } from '@/components/ui/select';
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {TriggerRef} from "@rn-primitives/select";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {InstructionFormModal} from "@/features/recipes/components/instruction/instruction-form-modal";
 
 type InstructionFormItemProps = {
-  id: string; // Add id property
+  id: string;
   index: number;
   control: Control<RecipeFormData>;
   errors?: FieldErrors<RecipeFormData>;
   onDelete: () => void;
   canDelete: boolean;
+  drag: () => void;
+  isActive: boolean;
 };
 
 export const InstructionFormItem: FC<InstructionFormItemProps> = ({
-  id, // Destructure id
+  id,
   index,
   control,
   errors,
   onDelete,
   canDelete,
+  drag,
+  isActive,
 }) => {
   const instructionTypes = ['prep', 'cook', 'bake', 'serve', 'other'];
-  
+
   const insets = useSafeAreaInsets();
   const contentInsets = {
     top: insets.top,
@@ -48,46 +52,33 @@ export const InstructionFormItem: FC<InstructionFormItemProps> = ({
     left: 12,
     right: 12,
   };
-  
-  // used by select
+
   const selectRef = useRef<TriggerRef>(null);
-  
-  // Workaround for rn-primitives/select not opening on mobile
   function onTouchStart() {
     selectRef.current?.open();
   }
 
+  const dragHandleColor = isActive ? 'hsl(var(--primary))' : 'gray';
+  const dragHandleOpacity = isActive ? 1 : 0.4;
+
+  const activeStyle = isActive ? {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+  } : {};
+
   return (
-    <Card key={id} className="mb-2"> {/* Use id as key */}
+    <Card key={id} className={`mb-2 ${isActive ? 'bg-primary/5' : ''}`} style={activeStyle}>
       <CardContent style={{ marginTop: 0 }}>
         <View className="gap-3 mb-2">
-          {/* First Row: Order and Delete Button */}
-          <View className="flex-row items-center">
-            {/* Step Number Badge */}
-            <View className="w-8 h-8 rounded-full bg-primary/10 items-center justify-center">
+          {/* Row 1: Order, Type Select, Expand Button, Drag Handle */}
+          <View className="flex-row items-center gap-2">
+            <View className="w-8 h-8 rounded-full bg-primary/10 items-center justify-center flex-shrink-0">
               <Text className="text-xs font-bold text-primary">{index + 1}</Text>
             </View>
-            {/* Spacer to push delete button to the far right */}
-            <View className="flex-1" />
-            {/* Delete Button */}
-            {canDelete && (
-              <Button
-                variant="outline"
-                size="icon"
-                className="ml-auto"
-                onPress={onDelete}
-              >
-                {/* todo: fix color */}
-                <Icon as={Trash2} color="#ef4444"/>
-              </Button>
-            )}
-          </View>
-
-          {/* Second Row: Type Select, Minutes, Seconds, Note Button */}
-          <View className="flex-row items-end gap-3">
-            {/* Type Selector */}
             <View className="flex-1">
-              <Text className="text-xs text-muted-foreground mb-1">Type</Text>
               <Controller
                 control={control}
                 name={`instructions.${index}.type`}
@@ -113,8 +104,60 @@ export const InstructionFormItem: FC<InstructionFormItemProps> = ({
                 )}
               />
             </View>
+            <InstructionFormModal
+              id={id}
+              index={index}
+              control={control}
+              errors={errors}
+              trigger={
+                <Button variant="outline" size="icon" className="flex-shrink-0">
+                  <Icon as={Expand} size={18} className="text-muted-foreground" />
+                </Button>
+              }
+            />
+            <TouchableOpacity
+              onPressIn={drag}
+              delayLongPress={100}
+              hitSlop={8}
+              style={{
+                opacity: dragHandleOpacity,
+                width: 40,
+                height: 40,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 6,
+                flexShrink: 0,
+              }}
+            >
+              <GripVertical size={18} color={dragHandleColor} />
+            </TouchableOpacity>
+          </View>
 
-            {/* Minutes */}
+          {/* Row 2: Description */}
+          <View>
+            <Text className="text-xs text-muted-foreground mb-1">Description</Text>
+            <Controller
+              control={control}
+              name={`instructions.${index}.description`}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Textarea
+                  placeholder="Describe this step..."
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value || ''}
+                  numberOfLines={4}
+                />
+              )}
+            />
+            {errors?.instructions?.[index]?.description && (
+              <Text className="text-destructive text-sm mt-1">
+                {errors.instructions[index]?.description?.message}
+              </Text>
+            )}
+          </View>
+
+          {/* Row 3: Minutes, Seconds, Delete Button */}
+          <View className="flex-row items-end gap-3">
             <View className="flex-1">
               <Text className="text-xs text-muted-foreground mb-1">Minutes</Text>
               <Controller
@@ -131,8 +174,6 @@ export const InstructionFormItem: FC<InstructionFormItemProps> = ({
                 )}
               />
             </View>
-
-            {/* Seconds */}
             <View className="flex-1">
               <Text className="text-xs text-muted-foreground mb-1">Seconds</Text>
               <Controller
@@ -149,57 +190,15 @@ export const InstructionFormItem: FC<InstructionFormItemProps> = ({
                 )}
               />
             </View>
-
-            {/* Note Popover Button */}
-            <View className="ml-2 flex-shrink-0 flex items-center justify-center">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <Icon as={MessageSquare} size={18} className="text-muted-foreground" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80" align="end" side="top">
-                  <View className="gap-2">
-                    <Text className="font-semibold">Step Note</Text>
-                    <Controller
-                      control={control}
-                      name={`instructions.${index}.note`}
-                      render={({ field: { onChange, onBlur, value } }) => (
-                        <Textarea
-                          placeholder="Add a note about this step..."
-                          onBlur={onBlur}
-                          onChangeText={onChange}
-                          value={value || ''}
-                          numberOfLines={3}
-                        />
-                      )}
-                    />
-                  </View>
-                </PopoverContent>
-              </Popover>
-            </View>
-          </View>
-
-          {/* Third Row: Description */}
-          <View>
-            <Text className="text-xs text-muted-foreground mb-1">Description</Text>
-            <Controller
-              control={control}
-              name={`instructions.${index}.description`}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Textarea
-                  placeholder="Describe this step..."
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value || ''}
-                  numberOfLines={5}
-                />
-              )}
-            />
-            {errors?.instructions?.[index]?.description && (
-              <Text className="text-destructive text-sm mt-1">
-                {errors.instructions[index]?.description?.message}
-              </Text>
+            {canDelete && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="flex-shrink-0"
+                onPress={onDelete}
+              >
+                <Icon as={Trash2} color="#ef4444" />
+              </Button>
             )}
           </View>
         </View>
