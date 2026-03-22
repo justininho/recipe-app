@@ -2,7 +2,6 @@ import React, {FC, useEffect} from 'react';
 import {Alert, View} from 'react-native';
 import {Controller, useFieldArray, useForm, useWatch} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Plus} from 'lucide-react-native';
 import {Text} from '@/components/ui/text';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
@@ -12,7 +11,6 @@ import {Recipe} from "@/features/recipes/types/recipe.types";
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import {ScrollView} from 'react-native-gesture-handler';
 import {IngredientItem} from "@/features/recipes/components/Ingredient/ingredient-item";
-import {Icon} from "@/components/ui/icon";
 import {InstructionItem} from "@/features/recipes/components/instruction/instruction-item";
 import {useRouter} from "expo-router";
 
@@ -243,9 +241,8 @@ export const RecipeForm: FC<RecipeFormProps> = ({
             })}
             
             <View className="flex items-end">
-              <Button size="icon" variant="outline"
-                      onPress={() => appendIngredient({id: Date.now().toString(), name: '', amount: 0, unit: ''})}>
-                <Icon as={Plus}/>
+              <Button variant="outline" onPress={() => router.push(`/(tabs)/recipes/edit/${recipeId}/ingredients/new` as any)}>
+                <Text className="text-sm text-muted-foreground">+ Add ingredient</Text>
               </Button>
             </View>
             
@@ -289,20 +286,9 @@ export const RecipeForm: FC<RecipeFormProps> = ({
               <Button
                 variant="outline"
                 className="mt-2"
-                onPress={() =>
-                  appendInstruction({
-                    id: Date.now().toString(),
-                    order: instructionFields.length + 1,
-                    description: '',
-                    note: '',
-                    minutes: 0,
-                    seconds: 0,
-                    type: 'prep',
-                    equipment: [],
-                  })
-                }
+                onPress={() => router.push(`/(tabs)/recipes/edit/${recipeId}/instructions/new` as any)}
               >
-                <Plus size={18} className="text-foreground mr-2"/>
+                <Text className="text-sm text-muted-foreground">+ Add step</Text>
               </Button>
             </View>
             

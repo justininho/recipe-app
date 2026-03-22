@@ -12,37 +12,38 @@ import {
   IngredientFormValues,
 } from '@/features/recipes/components/Ingredient/ingredient-form';
 
-export default function EditIngredientScreen() {
-  const params = useLocalSearchParams<{ recipeId: string; ingredientId: string }>();
-  const recipeId = params.recipeId;
-  const ingredientId = params.ingredientId;
+export default function NewInstructionIngredientScreen() {
+  const params = useLocalSearchParams<{ recipeId: string; instructionId: string }>();
+  const { recipeId, instructionId } = params;
   const router = useRouter();
 
   const recipe = MOCK_RECIPES.find((r) => r.id === recipeId);
-  const ingredientIndex = recipe?.ingredients.findIndex((i) => i.id === ingredientId) ?? -1;
-  const ingredient = ingredientIndex >= 0 ? recipe?.ingredients[ingredientIndex] : undefined;
+  const instruction = recipe?.instructions.find((i) => i.id === instructionId);
+  const instructionIndex = recipe?.instructions.findIndex((i) => i.id === instructionId) ?? -1;
+  const stepNumber = instructionIndex + 1;
+  const currentIngredientCount = instruction?.ingredients?.length ?? 0;
 
   const { control, handleSubmit, formState: { errors } } = useForm<IngredientFormValues>({
     resolver: zodResolver(ingredientFormSchema),
     defaultValues: {
-      name: ingredient?.name ?? '',
-      amount: ingredient?.amount ?? 0,
-      unit: ingredient?.unit ?? '',
-      prepNote: ingredient?.prepNote ?? '',
-      note: ingredient?.note ?? '',
+      name: '',
+      amount: 0,
+      unit: '',
+      prepNote: '',
+      note: '',
     },
   });
 
   function onSubmit(data: IngredientFormValues) {
-    // TODO: replace with API call
-    console.log('Saving ingredient:', { recipeId, ingredientId, ...data });
+    // TODO: replace with API call to add ingredient to instruction
+    console.log('Adding instruction ingredient:', { recipeId, instructionId, ...data });
     router.back();
   }
 
-  if (!recipe || !ingredient) {
+  if (!recipe) {
     return (
       <View className="flex-1 bg-background items-center justify-center p-6">
-        <Text className="text-muted-foreground text-base">Ingredient not found.</Text>
+        <Text className="text-muted-foreground text-base">Recipe not found.</Text>
         <Button className="mt-4" onPress={() => router.back()}>
           <Text>Go Back</Text>
         </Button>
@@ -55,20 +56,17 @@ export default function EditIngredientScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: recipe.name,
+          title: `Step ${stepNumber}`,
+          headerBackTitle: 'Back',
         }}
       />
 
       {/* Subheader */}
-      <View className="px-5 py-3 border-b border-border flex-row items-center gap-3">
-        <View className="flex-1">
-          <Text className="text-sm font-medium text-foreground" numberOfLines={1}>
-            {ingredient.name || 'Ingredient'}
-          </Text>
-          <Text className="text-xs text-muted-foreground mt-0.5">
-            Ingredient {ingredientIndex >= 0 ? ingredientIndex + 1 : '?'} of {recipe.ingredients.length}
-          </Text>
-        </View>
+      <View className="px-5 py-3 border-b border-border">
+        <Text className="text-sm font-medium text-foreground">New Ingredient</Text>
+        <Text className="text-xs text-muted-foreground mt-0.5">
+          Ingredient {currentIngredientCount + 1} · Step {stepNumber}
+        </Text>
       </View>
 
       {/* Scrollable body */}
@@ -84,9 +82,10 @@ export default function EditIngredientScreen() {
       {/* Footer */}
       <View className="px-5 py-4 border-t border-border">
         <Button className="w-full" onPress={handleSubmit(onSubmit)}>
-          <Text>Save</Text>
+          <Text>Add Ingredient</Text>
         </Button>
       </View>
     </View>
   );
 }
+

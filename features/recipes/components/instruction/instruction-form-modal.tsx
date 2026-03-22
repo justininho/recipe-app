@@ -161,6 +161,7 @@ export const InstructionFormModal: FC<InstructionFormModalProps> = ({
               <Icon as={FileText} size={14} className="text-muted-foreground" />
               <Text className="text-sm font-medium text-foreground">Description</Text>
               <Text className="text-xs text-destructive">*</Text>
+              <Text className="text-xs text-destructive">*</Text>
             </View>
             <Controller
               control={control}
@@ -230,7 +231,6 @@ export const InstructionFormModal: FC<InstructionFormModalProps> = ({
             <View className="flex-row items-center gap-2">
               <Icon as={ChefHat} size={14} className="text-muted-foreground" />
               <Text className="text-sm font-medium text-foreground">Equipment</Text>
-              <Text className="text-xs text-muted-foreground">(optional)</Text>
             </View>
             <EquipmentInput control={control} index={index} />
           </View>
@@ -240,7 +240,6 @@ export const InstructionFormModal: FC<InstructionFormModalProps> = ({
             <View className="flex-row items-center gap-2">
               <Icon as={BookOpen} size={14} className="text-muted-foreground" />
               <Text className="text-sm font-medium text-foreground">Note</Text>
-              <Text className="text-xs text-muted-foreground">(optional)</Text>
             </View>
             <Controller
               control={control}
@@ -319,9 +318,11 @@ const EquipmentInput: FC<EquipmentInputProps> = ({ control, index }) => {
                 </Button>
               </View>
             ))}
-            <Button variant="outline" onPress={handleAdd}>
-              <Text className="text-sm text-muted-foreground">+ Add equipment</Text>
-            </Button>
+            <View className="flex items-end">
+              <Button variant="outline" onPress={handleAdd}>
+                <Text className="text-sm text-muted-foreground">+ Add equipment</Text>
+              </Button>
+            </View>
           </View>
         );
       }}
