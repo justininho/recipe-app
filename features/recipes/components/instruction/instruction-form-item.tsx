@@ -20,10 +20,11 @@ import {
 } from '@/components/ui/select';
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {TriggerRef} from "@rn-primitives/select";
-import {InstructionFormModal} from "@/features/recipes/components/instruction/instruction-form-modal";
+import {useRouter} from "expo-router";
 
 type InstructionFormItemProps = {
   id: string;
+  recipeId: string;
   index: number;
   control: Control<RecipeFormData>;
   errors?: FieldErrors<RecipeFormData>;
@@ -35,6 +36,7 @@ type InstructionFormItemProps = {
 
 export const InstructionFormItem: FC<InstructionFormItemProps> = ({
   id,
+  recipeId,
   index,
   control,
   errors,
@@ -57,6 +59,8 @@ export const InstructionFormItem: FC<InstructionFormItemProps> = ({
   function onTouchStart() {
     selectRef.current?.open();
   }
+
+  const router = useRouter();
 
   const dragHandleColor = isActive ? 'hsl(var(--primary))' : 'gray';
   const dragHandleOpacity = isActive ? 1 : 0.4;
@@ -104,17 +108,14 @@ export const InstructionFormItem: FC<InstructionFormItemProps> = ({
                 )}
               />
             </View>
-            <InstructionFormModal
-              id={id}
-              index={index}
-              control={control}
-              errors={errors}
-              trigger={
-                <Button variant="outline" size="icon" className="flex-shrink-0">
-                  <Icon as={Expand} size={18} className="text-muted-foreground" />
-                </Button>
-              }
-            />
+            <Button
+              variant="outline"
+              size="icon"
+              className="flex-shrink-0"
+              onPress={() => router.push(`/(tabs)/recipes/edit/${recipeId}/instructions/${id}` as any)}
+            >
+              <Icon as={Expand} size={18} className="text-muted-foreground" />
+            </Button>
             <TouchableOpacity
               onPressIn={drag}
               delayLongPress={100}

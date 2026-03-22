@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {Alert, View} from 'react-native';
-import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import {Controller, useFieldArray, useForm, useWatch} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Plus} from 'lucide-react-native';
 import {Text} from '@/components/ui/text';
@@ -11,17 +11,20 @@ import {RecipeFormData, recipeSchema} from '@/features/recipes/validation/recipe
 import {Recipe} from "@/features/recipes/types/recipe.types";
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import {ScrollView} from 'react-native-gesture-handler';
-import {IngredientFormItem} from "@/features/recipes/components/Ingredient/ingredient-form-item";
+import {IngredientItem} from "@/features/recipes/components/Ingredient/ingredient-item";
 import {Icon} from "@/components/ui/icon";
-import {InstructionFormItem} from '@/features/recipes/components/instruction/instruction-form-item';
+import {InstructionItem} from "@/features/recipes/components/instruction/instruction-item";
+import {useRouter} from "expo-router";
 
 export type RecipeFormProps = {
   recipe?: Recipe;
+  recipeId?: string;
   onSave: () => void;
 }
 
 export const RecipeForm: FC<RecipeFormProps> = ({
                                                   recipe,
+                                                  recipeId,
                                                   onSave,
                                                 }) => {
   const {
@@ -37,7 +40,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
       prepTime: 0,
       cookTime: 0,
       servings: 4,
-      ingredients: [{name: '', amount: 0, unit: ''}],
+      ingredients: [{id: Date.now().toString(), name: '', amount: 0, unit: ''}],
       instructions: [{order: 1, description: ''}],
       tags: [],
       imageUrl: '',
@@ -49,6 +52,14 @@ export const RecipeForm: FC<RecipeFormProps> = ({
     if (recipe) {
       reset({
         ...recipe,
+        ingredients: recipe.ingredients.map((ingredient) => ({
+          id: ingredient.id || Date.now().toString(),
+          name: ingredient.name,
+          amount: ingredient.amount,
+          unit: ingredient.unit,
+          prepNote: ingredient.prepNote,
+          note: ingredient.note,
+        })),
         instructions: recipe.instructions.map((instruction, index) => ({
           id: instruction.id || Date.now().toString(), // Ensure id is set
           order: index + 1,
@@ -83,12 +94,17 @@ export const RecipeForm: FC<RecipeFormProps> = ({
   const {
     fields: instructionFields,
     append: appendInstruction,
-    remove: removeInstruction,
     replace: replaceInstructions,
   } = useFieldArray({
     control,
     name: 'instructions',
   });
+
+  // useFieldArray overwrites `id` with its own generated key; watch the real instruction ids from form values
+  const watchedInstructions = useWatch({ control, name: 'instructions' });
+  const watchedIngredients = useWatch({ control, name: 'ingredients' });
+  
+  const router = useRouter();
   
   return (
     <ScrollView className="flex-1 bg-background">
@@ -159,7 +175,7 @@ export const RecipeForm: FC<RecipeFormProps> = ({
                   <Text className="text-destructive text-sm mt-1">{errors.prepTime.message}</Text>
                 )}
               </View>
-              s
+              
               <View className="flex-1">
                 <Text className="text-sm font-medium mb-1">Cook Time (min)</Text>
                 <Controller
@@ -211,20 +227,24 @@ export const RecipeForm: FC<RecipeFormProps> = ({
             </CardTitle>
           </CardHeader>
           <CardContent className="gap-3">
-            {ingredientFields.map((field, index) => (
-              <IngredientFormItem
-                key={field.id}
-                index={index}
-                control={control}
-                errors={errors}
-                onDelete={() => removeIngredient(index)}
-                canDelete={ingredientFields.length > 1}
-              />
-            ))}
+            {ingredientFields.map((field, index) => {
+              const ingredient = watchedIngredients?.[index];
+              const ingredientWithDefaults = ingredient
+                ? { ...ingredient, unit: ingredient.unit ?? '' }
+                : { ...field, unit: field.unit ?? '' };
+              return (
+                <IngredientItem
+                  key={field.id}
+                  ingredient={ingredientWithDefaults}
+                  onPress={recipeId ? () => router.push(`/(tabs)/recipes/edit/${recipeId}/ingredients/${ingredientWithDefaults.id}` as any) : undefined}
+                  onDelete={ingredientFields.length > 1 ? () => removeIngredient(index) : undefined}
+                />
+              );
+            })}
             
             <View className="flex items-end">
               <Button size="icon" variant="outline"
-                      onPress={() => appendIngredient({name: '', amount: 0, unit: ''})}>
+                      onPress={() => appendIngredient({id: Date.now().toString(), name: '', amount: 0, unit: ''})}>
                 <Icon as={Plus}/>
               </Button>
             </View>
@@ -250,18 +270,19 @@ export const RecipeForm: FC<RecipeFormProps> = ({
               }}
               activationDistance={1}
               scrollEnabled={false}
-              renderItem={({item, getIndex, drag, isActive}) => (
-                <InstructionFormItem
-                  id={item.id}
-                  index={getIndex() ?? 0}
-                  control={control}
-                  errors={errors}
-                  onDelete={() => removeInstruction(getIndex() ?? 0)}
-                  canDelete={instructionFields.length > 1}
-                  drag={drag}
-                  isActive={isActive}
-                />
-              )}
+              renderItem={({item, getIndex, drag, isActive}) => {
+                const idx = getIndex() ?? 0;
+                const instructionId = watchedInstructions?.[idx]?.id ?? item.id;
+                return (
+                  <InstructionItem
+                    instruction={item}
+                    index={idx}
+                    onPress={() => router.push(`/(tabs)/recipes/edit/${recipeId}/instructions/${instructionId}` as any)}
+                    drag={drag}
+                    isActive={isActive}
+                  />
+                );
+              }}
             />
             
             <View className="flex items-end">

@@ -10,8 +10,8 @@ import {Icon} from "@/components/ui/icon";
 import {Badge} from "@/components/ui/badge";
 
 export default function RecipeScreen() {
-  const {id} = useLocalSearchParams<{ id: string }>();
-  const recipe = MOCK_RECIPES.find(r => r.id === id);
+  const {recipeId} = useLocalSearchParams<{ recipeId: string }>();
+  const recipe = MOCK_RECIPES.find(r => r.id === recipeId);
   
   return (
     <>
@@ -22,7 +22,7 @@ export default function RecipeScreen() {
           headerTitle: () => <></>,
           headerRight: () => <>
             <View className="px-6">
-              <Link href={`/recipes/edit/${id}`} asChild>
+              <Link href={`/recipes/edit/${recipeId}`} asChild>
                 <Button variant="outline" size="icon">
                   <Icon as={SquarePen}></Icon>
                 </Button>

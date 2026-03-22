@@ -38,8 +38,7 @@ export const InstructionItem: FC<InstructionItemProps> = ({
   const textStyle = isActive ? 'text-muted-foreground' : '';
   
   const [showDelete, setShowDelete] = useState(false);
-
-// On the outer TouchableOpacity:
+  
   
   return (
     <TouchableOpacity
@@ -58,10 +57,8 @@ export const InstructionItem: FC<InstructionItemProps> = ({
       activeOpacity={0.7}
       className={`flex-row gap-3 items-center p-3 mb-2 rounded-xl border ${containerStyle}`}
     >
-      <View className="w-7 h-7 rounded-full items-center justify-center shrink-0">
-        <Text className={`text-xs font-bold ${stepNumberStyle}`}>
-          {index + 1}
-        </Text>
+      <View className="w-8 h-8 rounded-full bg-primary/10 items-center justify-center flex-shrink-0">
+        <Text className="text-xs font-bold text-primary">{index + 1}</Text>
       </View>
       
       <View className="flex-1 gap-1">

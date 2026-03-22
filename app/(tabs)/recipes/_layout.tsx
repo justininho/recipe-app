@@ -25,16 +25,16 @@ export default function RecipesLayout() {
         }}
       />
       <Stack.Screen
-        name="view/[id]"
+        name="view/[recipeId]"
         options={{
           title: 'Recipe Details',
         }}
       />
       <Stack.Screen
-        name="edit/[id]"
+        name="edit/[recipeId]"
         options={{
-          title: 'Edit Recipe',
-          presentation: 'modal', // Makes it slide up like a modal
+          headerShown: false,
+          presentation: 'modal',
         }}
       />
       <Stack.Screen name="tags/[tag]"/>
